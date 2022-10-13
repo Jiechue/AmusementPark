@@ -33,12 +33,7 @@ const changeMsg = (change) =>{
   msg.value=change  //通过这种方式来赋值  变量名change不能跟全局变量msg名字一样
 }
 
-const user = reactive({
-  name: '张三'
-})
-const changeUser = (name) =>{
-  user.name=name
-}
+const user = reactive({})
 
 const rules = reactive({
   username:[
@@ -48,14 +43,14 @@ const rules = reactive({
     {required: true, message:'请输入密码', trigger: 'blur'}
   ],
 })
-const login = () =>{
+const Login = () =>{
   proxy.$refs.ruleFormRef.validate((valid)=>{
 
     if (valid){
       //Promise
       //往后台发请求 http://localhost:9090 /user/login
       // 后台数据格式{"code": "200","msg":"","data"：null}
-      request.post('/user/login').then(res => {
+      request.post('/user/login',user).then(res => {
         if (res.code === '200'){ //请求成功
           ElMessage({
             type: "success",

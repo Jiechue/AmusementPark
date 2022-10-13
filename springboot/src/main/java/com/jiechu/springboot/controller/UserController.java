@@ -13,9 +13,12 @@ public class UserController {
 
     @Autowired
     private UserService userService;
-    @GetMapping("/login")
-    public User login(String username,String password){
-        return userService.login(username,password);
+    @RequestMapping(value = "/login",method = RequestMethod.POST)
+    public User login(@RequestBody User user){
+        if (user.getUsername() == null||user.getPassword()==null){
+            throw new RuntimeException("参数错误");
+        }
+        return userService.login(user.getUsername(),user.getPassword());
     }
     @GetMapping("/list")
     public List<User> finAllUsers(){
