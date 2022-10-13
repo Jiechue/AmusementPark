@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jiechu.springboot.dao.UserDao">
+    <insert id="insertUser">
+        insert into user(username,password) values(#{username},#{password});
+    </insert>
+    <update id="updateUser">
+        update user set username = #{username},password = #{password} where id = #{id};
+    </update>
+    <delete id="deleteUser">
+        delete from user where id = #{id};
+    </delete>
+    <select id="finAllUsers" resultType="com.jiechu.springboot.entity.User">
+        select * from user;
+    </select>
+    <select id="findUser" resultType="com.jiechu.springboot.entity.User">
+        select * from user where username = #{username} and password = #{password};
+    </select>
+</mapper>
