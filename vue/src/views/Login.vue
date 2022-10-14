@@ -25,6 +25,7 @@ import {ref, reactive, getCurrentInstance} from 'vue';
 import{ User,Lock } from '@element-plus/icons-vue'
 import {ElMessage,ElNotification} from "element-plus";
 import request from "../request.js";
+import router from "../router/index.js";
 const {proxy} = getCurrentInstance()
 
 
@@ -51,11 +52,13 @@ const Login = () =>{
       //往后台发请求 http://localhost:9090 /user/login
       // 后台数据格式{"code": "200","msg":"","data"：null}
       request.post('/user/login',user).then(res => {
-        if (res.code === '200'){ //请求成功
+        console.log(res)
+        if (res){ //请求成功
           ElMessage({
             type: "success",
             message: '请求成功',
           })
+          router.push("/")
         }else {
           ElMessage({
             type: "error",

@@ -18,7 +18,11 @@ public class UserController {
         if (user.getUsername() == null||user.getPassword()==null){
             throw new RuntimeException("参数错误");
         }
-        return userService.login(user.getUsername(),user.getPassword());
+        User res = userService.login(user.getUsername(),user.getPassword());
+        if(res == null){
+            throw new RuntimeException("用户名或密码错误");
+        }
+        return res;
     }
     @GetMapping("/list")
     public List<User> finAllUsers(){
