@@ -53,7 +53,7 @@ const Login = () =>{
       // 后台数据格式{"code": "200","msg":"","data"：null}
       request.post('/user/login',user).then(res => {
         console.log(res)
-        if (res){ //请求成功
+        if (res.code === '200'){ //请求成功
           ElMessage({
             type: "success",
             message: '请求成功',
@@ -62,7 +62,7 @@ const Login = () =>{
         }else {
           ElMessage({
             type: "error",
-            message: '请求失败 ',
+            message: res.msg,
           })
         }
       })
