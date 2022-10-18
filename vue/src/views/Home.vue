@@ -5,6 +5,14 @@
   <el-table :data="state.tableDate" stripe style="width: 100%;">
     <el-table-column prop="id" label="ID" width="180"/>
     <el-table-column prop="username" label="username"/>
+    <el-table-column prop="password" label="密码"/>
+    <el-table-column prop="realName" label="真实姓名"/>
+    <el-table-column prop="sex" label="性别"/>
+    <el-table-column prop="age" label="年龄"/>
+    <el-table-column prop="phone" label="电话"/>
+    <el-table-column prop="email" label="邮箱"/>
+    <el-table-column prop="address" label="地址"/>
+    <el-table-column prop="avatar" label="头像"/>
     <el-table-column width="200px" label="操作">
       <template #default="scope">
         <el-button link type="primary" size="small" @click="handleEdit(scope.row)"><el-icon><EditPen/></el-icon>编辑</el-button>
@@ -24,6 +32,34 @@
       </el-form-item>
       <el-form-item label="密码" prop="password" label-width="formLabelWidth">
         <el-input v-model="state.form.password" autocomplete="off" placeholder="请输入密码"/>
+      </el-form-item>
+      <el-form-item label="真实姓名" prop="realName" label-width="formLabelWidth">
+        <el-input v-model="state.form.realName" autocomplete="off" placeholder="请输入真实姓名"/>
+      </el-form-item>
+      <el-form-item label="性别" prop="sex" label-width="formLabelWidth">
+        <el-select v-model="state.form.sex" class="m-2" placeholder="Select" size="large">
+          <el-option
+              v-for="item in options"
+              :key="item.value"
+              :label="item.label"
+              :value="item.value"
+          />
+        </el-select>
+      </el-form-item>
+      <el-form-item label="年龄" prop="age" label-width="formLabelWidth">
+        <el-input v-model="state.form.age" autocomplete="off" placeholder="请输入年龄"/>
+      </el-form-item>
+      <el-form-item label="电话号码" prop="phone" label-width="formLabelWidth">
+        <el-input v-model="state.form.phone" autocomplete="off" placeholder="请输入电话号码"/>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email" label-width="formLabelWidth">
+        <el-input v-model="state.form.email" autocomplete="off" placeholder="请输入邮箱"/>
+      </el-form-item>
+      <el-form-item label="地址" prop="address" label-width="formLabelWidth">
+        <el-input type="textarea" v-model="state.form.address" autocomplete="off" placeholder="请输入地址"/>
+      </el-form-item>
+      <el-form-item label="用户名" prop="username" label-width="formLabelWidth">
+        <el-input v-model="state.form.username" autocomplete="off" placeholder="请输入用户名"/>
       </el-form-item>
     </el-form>
     <template #footer>
@@ -91,6 +127,7 @@ const Save = () => {
         }
       })
     }else {
+      console.log(state.form)
       request.post("/user",state.form).then(res => {
         if (res.code === '200'){
           ElMessage.success("保存成功")
@@ -115,4 +152,14 @@ const deleteRow = (id) => {
     load()
   })
 }
+
+const options = [
+  {
+    value: '男',
+    label: '男性',
+  },
+  {
+    value: '女',
+    label: '女性',
+  }]
 </script>
