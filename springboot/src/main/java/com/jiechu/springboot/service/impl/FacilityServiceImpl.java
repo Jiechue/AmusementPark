@@ -1,0 +1,59 @@
+package com.jiechu.springboot.service.impl;
+
+import com.jiechu.springboot.controller.DTO.FacilityQueryDTO;
+import com.jiechu.springboot.dao.FacilityDao;
+import com.jiechu.springboot.entity.Facility;
+import com.jiechu.springboot.service.FacilityService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+@Service
+public class FacilityServiceImpl implements FacilityService {
+    @Autowired
+    private FacilityDao facilityDao;
+    @Override
+    public boolean addFacility(Facility facility) {
+        if (facilityDao.insert(facility)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Facility> showAllFacilities() {
+        return facilityDao.selectAll();
+    }
+
+    @Override
+    public boolean deleteFacility(Integer id) {
+        if (facilityDao.delete(id)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean updateFacility(Facility facility) {
+        if (facilityDao.update(facility)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public List<Facility> showPageFacilities(FacilityQueryDTO facilityQueryDTO) {
+        return facilityDao.selectPage(facilityQueryDTO);
+    }
+
+    @Override
+    public long count(FacilityQueryDTO facilityQueryDTO) {
+        return facilityDao.count(facilityQueryDTO);
+    }
+
+    @Override
+    public Facility showFacilityById(Integer id) {
+        return facilityDao.selectById(id);
+    }
+}

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiechu.springboot.dao.FacilityCategoryDao">
+    <insert id="insertFacilityCategory">
+        insert into facilitycategory(name,remark,pid) values(#{name},#{remark},#{pid});
+    </insert>
+    <update id="updateFacilityCategory">
+        update facilitycategory set name = #{name},remark = #{remark},pid = #{pid},updatetime = #{updatetime} where id = #{id};
+    </update>
+    <delete id="deleteFacilityCategory">
+        delete from facilitycategory where id = #{id};
+    </delete>
+    <select id="finAllFacilityCategories" resultType="com.jiechu.springboot.entity.FacilityCategory">
+        select * from facilitycategory;
+    </select>
+
+    <resultMap id="categoryMap" type="com.jiechu.springboot.entity.FacilityCategory">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <result column="pid" property="pid"/>
+        <result column="createtime" property="createtime"/>
+        <result column="updatetime" property="updatetime"/>
+        <collection property="children" column="id" ofType="com.jiechu.springboot.entity.FacilityCategory" select="selectByPid"/>
+    </resultMap>
+
+    <select id="selectByPid" resultType="com.jiechu.springboot.entity.FacilityCategory">
+        select * from facilitycategory where pid = #{id} order by id desc
+    </select>
+
+    <select id="findPageFacilityCategories" resultMap="categoryMap">
+        select c1.* from facilitycategory c1
+        left join facilitycategory c2
+        on c1.id = c2.pid
+        <where>
+            isnull(c1.pid)
+            <if test="name !=null and name !=''">
+                and (c1.name like concat('%',#{name},'%') or c2.name like concat('%',#{name},'%'))
+            </if>
+        </where>
+        group by c1.id
+        order by c1.id desc
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="count" resultType="long">
+        select count(id) from facilitycategory
+        <where>
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findFacilityCategoryById" resultType="com.jiechu.springboot.entity.FacilityCategory">
+        select * from facilitycategory where id = #{id};
+    </select>
+
+    <select id="selectByName" resultType="com.jiechu.springboot.entity.FacilityCategory">
+        select * from facilitycategory where name like concat('%',#{name},'%') order by id desc
+    </select>
+</mapper>

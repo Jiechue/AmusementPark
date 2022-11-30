@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.jiechu.springboot.dao.FacilityDao">
+    <insert id="insert">
+        insert into facility(category,name,opentime,price,description,enable,cover) values(#{category},#{name},#{opentime},#{price},#{description},#{enable},#{cover});
+    </insert>
+    <update id="update">
+        update facility set category = #{category},name = #{name},opentime = #{opentime},price = #{price},description = #{description},enable = #{enable},cover = #{cover},updatetime = #{updatetime} where id = #{id};
+    </update>
+    <delete id="delete">
+        delete from facility where id = #{id};
+    </delete>
+    <select id="selectAll" resultType="com.jiechu.springboot.entity.Facility">
+        select * from facility;
+    </select>
+    <select id="selectPage" resultType="com.jiechu.springboot.entity.Facility">
+        select * from facility
+        <where>
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="count" resultType="long">
+        select count(id) from admin
+        <where>
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+    <select id="selectById" resultType="com.jiechu.springboot.entity.Facility">
+        select * from admin where id = #{id};
+    </select>
+</mapper>

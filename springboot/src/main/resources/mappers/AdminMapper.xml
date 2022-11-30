@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jiechu.springboot.dao.AdminDao">
+    <select id="findAdmin" resultType="com.jiechu.springboot.entity.Admin">
+        select * from admin where username = #{username} and password = #{password};
+    </select>
+    <insert id="insertAdmin">
+        insert into admin(username,password,power) values(#{username},#{password},#{power});
+    </insert>
+    <update id="updateAdmin">
+        update admin set username = #{username},password = #{password},power = #{power} where id = #{id};
+    </update>
+    <delete id="deleteAdmin">
+        delete from admin where id = #{id};
+    </delete>
+    <select id="finAllAdmins" resultType="com.jiechu.springboot.entity.Admin">
+        select * from admin;
+    </select>
+    <select id="findPageAdmins" resultType="com.jiechu.springboot.entity.Admin">
+        select * from admin
+        <where>
+            <if test="username !=null and username !=''">
+                and username like concat('%',#{username},'%')
+            </if>
+        </where>
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="count" resultType="long">
+        select count(id) from admin
+        <where>
+            <if test="username !=null and username !=''">
+                and username like concat('%',#{username},'%')
+            </if>
+        </where>
+    </select>
+    <select id="findAdimById" resultType="com.jiechu.springboot.entity.Admin">
+        select * from admin where id = #{id};
+    </select>
+    <update id="updateAdminPassword">
+        update admin set password = #{newPassword} where id = #{id};
+    </update>
+</mapper>
