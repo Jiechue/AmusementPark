@@ -1,8 +1,10 @@
 import axios from 'axios'
 import {ElMessage} from "element-plus";
+import router from "./router/index.js";
+import Cookies from "js-cookie"
 
 const request = axios.create({
-    baseURL: 'http://localhost:9090',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
+    baseURL: 'http://localhost:9090/api',  // 注意！！ 这里是全局统一加上了 后端接口前缀 前缀，后端必须进行跨域配置！
     timeout: 5000
 })
 
@@ -12,6 +14,10 @@ const request = axios.create({
 request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
+    const adminJson = Cookies.get('admin')
+    if (adminJson){
+        config.headers['token'] = JSON.parse(adminJson).token
+    }
     // config.headers['token'] = user.token;  // 设置请求头
     return config
 }, error => {
@@ -31,16 +37,19 @@ request.interceptors.response.use(
         if (typeof res === 'string') {
             res = res ? JSON.parse(res) : res
         }
+        if (res.code === '401'){
+            router.push('/login')
+        }
         return res;
     },
     error => {
         console.log('err' + error) // for debug
-        if (error.response.status !== 200){
-            ElMessage({
-                type: "error",
-                message: '接口异常 ',
-            })
-        }
+        // if (error.response.status !== 200){
+        //     ElMessage({
+        //         type: "error",
+        //         message: '接口异常 ',
+        //     })
+        // }
         return Promise.reject(error)
     }
 )

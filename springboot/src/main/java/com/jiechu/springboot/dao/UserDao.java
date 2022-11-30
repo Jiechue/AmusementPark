@@ -1,5 +1,6 @@
 package com.jiechu.springboot.dao;
 
+import com.jiechu.springboot.controller.DTO.UserQueryDTO;
 import com.jiechu.springboot.entity.User;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -13,4 +14,6 @@ public interface UserDao {
     List<User> finAllUsers();
     int deleteUser(Integer id);
     int updateUser(User user);
+    List<User> findPageUsers(UserQueryDTO userQueryDTO);
+    long count(UserQueryDTO userQueryDTO);
 }

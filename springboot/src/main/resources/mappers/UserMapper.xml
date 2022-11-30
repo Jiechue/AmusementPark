@@ -3,10 +3,10 @@
 
 <mapper namespace="com.jiechu.springboot.dao.UserDao">
     <insert id="insertUser">
-        insert into user(username,password) values(#{username},#{password});
+        insert into user(username,password,realName,sex,age,phone,email,address) values(#{username},#{password},#{realName},#{sex},#{age},#{phone},#{email},#{address});
     </insert>
     <update id="updateUser">
-        update user set username = #{username},password = #{password},sex = #{sex},realName = #{realName} where id = #{id};
+        update user set username = #{username},password = #{password},sex = #{sex},realName = #{realName},age = #{age},phone = #{phone},email = #{email},address = #{address} where id = #{id};
     </update>
     <delete id="deleteUser">
         delete from user where id = #{id};
@@ -16,5 +16,34 @@
     </select>
     <select id="findUser" resultType="com.jiechu.springboot.entity.User">
         select * from user where username = #{username} and password = #{password};
+    </select>
+    <select id="findPageUsers" resultType="com.jiechu.springboot.entity.User">
+        select * from user
+        <where>
+            <if test="username !=null and username !=''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="phone !=null and phone !=''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+            <if test="email !=null and email !=''">
+                and email like concat('%',#{email},'%')
+            </if>
+        </where>
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="count" resultType="long">
+        select count(id) from user
+        <where>
+            <if test="username !=null and username !=''">
+                and username like concat('%',#{username},'%')
+            </if>
+            <if test="phone !=null and phone !=''">
+                and phone like concat('%',#{phone},'%')
+            </if>
+            <if test="email !=null and email !=''">
+                and email like concat('%',#{email},'%')
+            </if>
+        </where>
     </select>
 </mapper>

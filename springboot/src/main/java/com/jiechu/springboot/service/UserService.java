@@ -1,5 +1,6 @@
 package com.jiechu.springboot.service;
 
+import com.jiechu.springboot.controller.DTO.UserQueryDTO;
 import com.jiechu.springboot.entity.User;
 import org.springframework.stereotype.Service;
 
@@ -11,4 +12,6 @@ public interface UserService {
     List<User> showAllUser();
     boolean deleteUser(Integer id);
     boolean updateUser(User user);
+    List<User> showPageUser(UserQueryDTO userQueryDTO);
+    long count(UserQueryDTO userQueryDTO);
 }

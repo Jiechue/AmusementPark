@@ -1,1 +1,9 @@
 /*全局CSS变量*/
+body{
+    margin: 0;
+    padding: 0;
+    background-color: #eee;
+}
+*{
+    box-sizing: border-box;
+}

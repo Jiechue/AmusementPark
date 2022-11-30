@@ -1,5 +1,6 @@
 package com.jiechu.springboot.service.impl;
 
+import com.jiechu.springboot.controller.DTO.UserQueryDTO;
 import com.jiechu.springboot.dao.UserDao;
 import com.jiechu.springboot.entity.User;
 import com.jiechu.springboot.service.UserService;
@@ -44,5 +45,15 @@ public class UserServiceImpl implements UserService {
         if (userDao.updateUser(user)>0)
             return true;
         return false;
+    }
+
+    @Override
+    public List<User> showPageUser(UserQueryDTO userQueryDTO) {
+        return userDao.findPageUsers(userQueryDTO);
+    }
+
+    @Override
+    public long count(UserQueryDTO userQueryDTO) {
+        return userDao.count(userQueryDTO);
     }
 }
