@@ -1,5 +1,6 @@
 package com.jiechu.springboot.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
 import com.jiechu.springboot.controller.DTO.FacilityQueryDTO;
 import com.jiechu.springboot.dao.FacilityDao;
 import com.jiechu.springboot.entity.Facility;
@@ -15,7 +16,7 @@ public class FacilityServiceImpl implements FacilityService {
     private FacilityDao facilityDao;
     @Override
     public boolean addFacility(Facility facility) {
-        if (facilityDao.insert(facility)>0){
+        if (facilityDao.insert(categoriesToCategory(facility))>0){
             return true;
         }
         return false;
@@ -36,7 +37,7 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     public boolean updateFacility(Facility facility) {
-        if (facilityDao.update(facility)>0){
+        if (facilityDao.update(categoriesToCategory(facility))>0){
             return true;
         }
         return false;
@@ -55,5 +56,15 @@ public class FacilityServiceImpl implements FacilityService {
     @Override
     public Facility showFacilityById(Integer id) {
         return facilityDao.selectById(id);
+    }
+
+    private Facility categoriesToCategory(Facility facility){
+        List<String> categories = facility.getCategories();
+        StringBuilder sb = new StringBuilder();
+        if (CollUtil.isNotEmpty(categories)){
+            categories.forEach(v -> sb.append(v).append(" > "));
+            facility.setCategory(sb.toString().substring(0, sb.lastIndexOf(" > ")));
+        }
+        return facility;
     }
 }

@@ -16,9 +16,14 @@
     <el-table-column prop="phone" label="电话"/>
     <el-table-column prop="email" label="邮箱"/>
     <el-table-column prop="address" label="地址"/>
-    <el-table-column prop="avatar" label="头像"/>
+    <el-table-column prop="avatar" label="头像">
+      <template v-slot="scope">
+        <el-image :src="scope.row.avatar" :preview-src-list="[scope.row.avatar]"></el-image>
+      </template>
+    </el-table-column>
     <el-table-column width="200px" label="操作">
       <template #default="scope">
+        <el-button link type="primary" size="small" @click="handleReset(scope.row)"><el-icon><EditPen/></el-icon>重置密码</el-button>
         <el-button link type="primary" size="small" @click="handleEdit(scope.row)"><el-icon><EditPen/></el-icon>编辑</el-button>
         <el-popconfirm title="确定删除吗？" @confirm="deleteRow(scope.row.id)" confirm-button-text="确定" cancel-button-text="取消">
           <template #reference>
@@ -77,7 +82,7 @@
       <el-form-item label="头像" prop="avatar" label-width="formLabelWidth">
         <el-upload
             class="avatar-uploader"
-            action="http://localhost:9090/user/file/upload"
+            :action="'http://localhost:9090/api/user/file/upload?token=' + state.admin.token"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
         >
@@ -112,6 +117,7 @@ const checkEmail = (rule, value, callback) => {
   callback()
 }
 const state = reactive({
+  admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')) : {},
   tableDate:[],
   form:{},
   rules :{
@@ -127,7 +133,7 @@ const state = reactive({
     ],
   }
 })
-
+const url = ref('http://localhost:9090/api/user/file/upload?token=' + state.admin.token)
 const currentPage = ref(1)
 const pageSize = ref(1)
 const total = ref(0)
@@ -171,11 +177,28 @@ const handleEdit = (row) => {
   state.form = JSON.parse(JSON.stringify(row))
 }
 const handleAvatarSuccess = (res) => {
+  state.form.avatar = {avatar: ''}
+  console.log(res.data)
   if (res.code === '200'){
     state.form.avatar = res.data
   }
 }
-
+const handleReset = (row) => {
+  state.form = JSON.parse(JSON.stringify(row))
+  proxy.$refs.ruleFormRef.validate((valid)=>{
+    if (state.form.id){//如果id存在则为编辑
+      request.put("/reset",state.form).then(res => {
+        if (res.code === '200'){
+          ElMessage.success("重置成功密码为:" + res.data.password)
+          dialogFormVisible.value = false;
+          load()
+        }else {
+          ElMessage.error(res.msg)
+        }
+      })
+    }
+  })
+}
 const Save = () => {
   proxy.$refs.ruleFormRef.validate((valid)=>{
     if (state.form.id){//如果id存在则为编辑
@@ -215,15 +238,7 @@ const deleteRow = (id) => {
   })
 }
 
-const options = [
-  {
-    value: '男',
-    label: '男性',
-  },
-  {
-    value: '女',
-    label: '女性',
-  }]
+
 </script>
 
 <style scoped>

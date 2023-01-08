@@ -18,7 +18,7 @@ import java.util.Date;
 
 @Component
 @Slf4j
-public class TokenUtils {
+public class AdminTokenUtils {
 
     private static AdminService staticAdminService;
 
@@ -52,7 +52,7 @@ public class TokenUtils {
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
             token = request.getHeader("token");//标头获取token
-            if (StrUtil.isNotBlank(token)) {
+            if (StrUtil.isBlank(token)) { //header没有，就从参数获取
                 token = request.getParameter("token");//参数获取token /admin?token=???
             }
             if (StrUtil.isBlank(token)) {

@@ -2,14 +2,13 @@ package com.jiechu.springboot.service.impl;
 
 import com.jiechu.springboot.common.SecurePassword;
 import com.jiechu.springboot.controller.DTO.AdminQueryDTO;
-import com.jiechu.springboot.controller.DTO.AdminUpdatePasswordDTO;
-import com.jiechu.springboot.controller.DTO.LoginDTO;
+import com.jiechu.springboot.controller.DTO.UpdatePasswordDTO;
+import com.jiechu.springboot.controller.DTO.AdminLoginDTO;
 import com.jiechu.springboot.dao.AdminDao;
 import com.jiechu.springboot.entity.Admin;
-import com.jiechu.springboot.entity.User;
 import com.jiechu.springboot.exception.ServiceException;
 import com.jiechu.springboot.service.AdminService;
-import com.jiechu.springboot.utils.TokenUtils;
+import com.jiechu.springboot.utils.AdminTokenUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,16 +20,16 @@ public class AdminServiceImpl implements AdminService {
     @Autowired
     private AdminDao adminDao;
     @Override
-    public LoginDTO login(String username, String password) {
+    public AdminLoginDTO login(String username, String password) {
         Admin admin = adminDao.findAdmin(username, SecurePassword.securePassword(password));
         if (admin == null){
             throw new ServiceException("用户名或密码错误");
         }
-        LoginDTO loginDTO = new LoginDTO();
+        AdminLoginDTO loginDTO = new AdminLoginDTO();
         BeanUtils.copyProperties(admin,loginDTO);
         System.out.println(loginDTO);
         //生成token
-        String token = TokenUtils.getToken(String.valueOf(admin.getId()),admin.getPassword());
+        String token = AdminTokenUtils.getToken(String.valueOf(admin.getId()),admin.getPassword());
         loginDTO.setToken(token);
         return loginDTO;
     }
@@ -79,7 +78,7 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public boolean updateAdminPassword(AdminUpdatePasswordDTO adminUpdatePasswordDTO) {
+    public boolean updateAdminPassword(UpdatePasswordDTO adminUpdatePasswordDTO) {
         adminUpdatePasswordDTO.setNewPassword(SecurePassword.securePassword(adminUpdatePasswordDTO.getNewPassword()));
         if (adminDao.updateAdminPassword(adminUpdatePasswordDTO)>0)
             return true;

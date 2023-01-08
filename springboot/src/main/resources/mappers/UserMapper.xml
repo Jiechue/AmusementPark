@@ -3,10 +3,10 @@
 
 <mapper namespace="com.jiechu.springboot.dao.UserDao">
     <insert id="insertUser">
-        insert into user(username,password,realName,sex,age,phone,email,address) values(#{username},#{password},#{realName},#{sex},#{age},#{phone},#{email},#{address});
+        insert into user(username,password,realName,sex,age,phone,email,address,avatar) values(#{username},#{password},#{realName},#{sex},#{age},#{phone},#{email},#{address},#{avatar});
     </insert>
     <update id="updateUser">
-        update user set username = #{username},password = #{password},sex = #{sex},realName = #{realName},age = #{age},phone = #{phone},email = #{email},address = #{address} where id = #{id};
+        update user set username = #{username},password = #{password},sex = #{sex},realName = #{realName},age = #{age},phone = #{phone},email = #{email},address = #{address},avatar = #{avatar} where id = #{id};
     </update>
     <delete id="deleteUser">
         delete from user where id = #{id};
@@ -46,4 +46,13 @@
             </if>
         </where>
     </select>
+    <select id="selectById" resultType="com.jiechu.springboot.entity.User">
+        select * from user where id = #{id};
+    </select>
+    <update id="updatePassword">
+        update user set password = #{newPassword} where id = #{id};
+    </update>
+    <update id="resetPassword">
+        update user set password = #{password} where id = #{id};
+    </update>
 </mapper>

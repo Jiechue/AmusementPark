@@ -18,7 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 @Component
 @Slf4j
-public class JwtInterceptor implements HandlerInterceptor {
+public class AdminJwtInterceptor implements HandlerInterceptor {
 
     private static final String ERROR_CODE_401 = "401";
 

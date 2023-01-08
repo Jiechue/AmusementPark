@@ -1,11 +1,10 @@
 package com.jiechu.springboot.controller;
 
-import cn.hutool.crypto.SecureUtil;
 import com.jiechu.springboot.common.Result;
 import com.jiechu.springboot.common.SecurePassword;
 import com.jiechu.springboot.controller.DTO.AdminQueryDTO;
-import com.jiechu.springboot.controller.DTO.AdminUpdatePasswordDTO;
-import com.jiechu.springboot.controller.DTO.LoginDTO;
+import com.jiechu.springboot.controller.DTO.UpdatePasswordDTO;
+import com.jiechu.springboot.controller.DTO.AdminLoginDTO;
 import com.jiechu.springboot.entity.Admin;
 import com.jiechu.springboot.exception.ServiceException;
 import com.jiechu.springboot.service.AdminService;
@@ -14,9 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -33,7 +29,7 @@ public class AdminController {
         if (admin.getUsername() == null||admin.getPassword()==null){
             return Result.error("参数错误");
         }
-        LoginDTO res = adminService.login(admin.getUsername(), admin.getPassword());
+        AdminLoginDTO res = adminService.login(admin.getUsername(), admin.getPassword());
         if(res == null){
             return Result.error("用户名或密码错误");
         }
@@ -94,7 +90,7 @@ public class AdminController {
         return Result.success(adminService.deleteAdmin(id));
     }
     @PutMapping("/updatePassword")
-    public Result updatePassword(@RequestBody AdminUpdatePasswordDTO adminUpdatePasswordDTO){
+    public Result updatePassword(@RequestBody UpdatePasswordDTO adminUpdatePasswordDTO){
         System.out.println(adminUpdatePasswordDTO);
         if (adminService.showAdminById(adminUpdatePasswordDTO.getId()).getPassword().equals(SecurePassword.securePassword(adminUpdatePasswordDTO.getOldPassword()))){
             return Result.success(adminService.updateAdminPassword(adminUpdatePasswordDTO));

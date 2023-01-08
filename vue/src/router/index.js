@@ -49,9 +49,19 @@ const routes = [
         component: () => import('../views/ReceptionTemplate.vue'),
         children: [
             {
+                path: '',
+                name: 'ReceptionHome',
+                component: () => import('../views/reception/Home.vue')
+            },
+            {
                 path: 'login',
                 name: 'ReceptionLogin',
                 component: () => import('../views/reception/Login.vue')
+            },
+            {
+                path: 'facilities',
+                name: 'ReceptionFacilities',
+                component: () => import('../views/reception/Facility.vue')
             }
         ]
     },
@@ -67,12 +77,12 @@ const router = createRouter({
 })
 
 //路由首位
-router.beforeEach((to,from,next) => {
-    if (to.path === '/login') next()
-    const admin = Cookies.get("admin")
-    if (!admin && to.path !== '/login') return next("/login")
-    next()
-})
+// router.beforeEach((to,from,next) => {
+//     if (to.path === '/login') next()
+//     const admin = Cookies.get("admin")
+//     if (!admin && to.path !== '/login') return next("/login")
+//     next()
+// })
 
 //输出对象
 export default router;

@@ -53,9 +53,8 @@
       <el-form-item label="设施类别" prop="category" label-width="formLabelWidth">
         <el-cascader
             :props="{value: 'name', label: 'name'}"
-            v-model="state.form.category"
+            v-model="state.form.categories"
             :options="state.categories"
-            @change="handleChange"
         ></el-cascader>
       </el-form-item>
       <el-form-item label="设施名称" prop="name" label-width="formLabelWidth">
@@ -91,10 +90,10 @@
           />
         </el-select>
       </el-form-item>
-      <el-form-item label="头像" prop="cover" label-width="formLabelWidth">
+      <el-form-item label="设施图片" prop="avatar" label-width="formLabelWidth">
         <el-upload
             class="avatar-uploader"
-            action="http://localhost:9090/facility/file/upload"
+            :action="'http://localhost:9090/api/facility/file/upload?token=' + state.admin.token"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
         >
@@ -130,6 +129,7 @@ const checkEmail = (rule, value, callback) => {
   callback()
 }
 const state = reactive({
+  admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')) : {},
   tableDate:[],
   categories:[],
   form:{},
@@ -184,9 +184,14 @@ const handleAdd = () => {
 const handleEdit = (row) => {
   dialogFormVisible.value= true
   state.form = JSON.parse(JSON.stringify(row))
+  if (state.form.category){
+    state.form.categories = state.form.category.split(' > ')
+  }
   categoryTree()
 }
 const handleAvatarSuccess = (res) => {
+  state.form.cover = {cover: ''}
+  console.log(res.data)
   if (res.code === '200'){
     state.form.cover = res.data
   }
@@ -219,9 +224,7 @@ const Save = () => {
     }
   })
 }
-const handleChange = (val) => {
-  console.log(val)
-}
+
 const categoryTree = () => {
   request.get('/facilityCategory/tree').then(res => {
     state.categories = res.data

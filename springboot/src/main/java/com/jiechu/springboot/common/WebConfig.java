@@ -1,6 +1,6 @@
 package com.jiechu.springboot.common;
 
-import com.jiechu.springboot.Interceptor.JwtInterceptor;
+import com.jiechu.springboot.Interceptor.AdminJwtInterceptor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.bind.annotation.RestController;
@@ -11,7 +11,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class WebConfig implements  WebMvcConfigurer {
     @Autowired
-    JwtInterceptor jwtInterceptor;
+    AdminJwtInterceptor adminJwtInterceptor;
 
     @Override
     public void configurePathMatch(PathMatchConfigurer configurer) {
@@ -21,6 +21,10 @@ public class WebConfig implements  WebMvcConfigurer {
     // 加自定义拦截器JwtInterceptor，设置拦截规则
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(jwtInterceptor).addPathPatterns("/api/**").excludePathPatterns("/api/admin/login");
+        registry.addInterceptor(adminJwtInterceptor).addPathPatterns("/api/admin/**").excludePathPatterns("/api/admin/login")
+                .addPathPatterns("/api/facilityCategory/**")
+                .addPathPatterns("/api/facility/**")
+                .addPathPatterns("/api/user/page")
+                .addPathPatterns("/api/user/list");
     }
 }
