@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.jiechu.springboot.dao.MessageDao">
+    <insert id="insert">
+
+    </insert>
+    <update id="updateAddLike">
+        update message set liketotal = liketotal+1 where id = #{id}
+    </update>
+    <update id="updateAddDisLike">
+        update message set liketotal = disliketotal+1 where id = #{id}
+    </update>
+    <update id="updateReduceLike">
+        update message set liketotal = liketotal-1 where id = #{id}
+    </update>
+    <update id="updateReduceDisLike">
+        update message set liketotal = disliketotal-1 where id = #{id}
+    </update>
+    <delete id="delete">
+        delete from message where id = #{id};
+    </delete>
+    <select id="selectAll" resultType="com.jiechu.springboot.entity.Message">
+        select * from message;
+    </select>
+    <select id="selectAllByFacilityId" resultType="com.jiechu.springboot.entity.Message">
+        select * from message where facilityid = #{id};
+    </select>
+    <select id="selectPageFacilities" resultType="com.jiechu.springboot.entity.Message">
+        select * from message
+        <where>
+            <if test="content !=null and content !=''">
+                and content like concat('%',#{content},'%')
+            </if>
+        </where>
+        limit #{pageNum},#{pageSize}
+    </select>
+    <select id="selectById" resultType="com.jiechu.springboot.entity.Message">
+        select * from message where id = #{id};
+    </select>
+    <select id="count" resultType="long">
+        select count(id) from admin
+        <where>
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+        </where>
+    </select>
+</mapper>

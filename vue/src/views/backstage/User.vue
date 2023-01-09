@@ -186,7 +186,7 @@ const handleAvatarSuccess = (res) => {
 const handleReset = (row) => {
   state.form = JSON.parse(JSON.stringify(row))
   proxy.$refs.ruleFormRef.validate((valid)=>{
-    if (state.form.id){//如果id存在则为编辑
+    if (state.form.id){
       request.put("/reset",state.form).then(res => {
         if (res.code === '200'){
           ElMessage.success("重置成功密码为:" + res.data.password)
