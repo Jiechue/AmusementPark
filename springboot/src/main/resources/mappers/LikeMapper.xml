@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiechu.springboot.dao.LikeDao">
     <insert id="insert">
-
+        insert into likeskey(userid,messageid,action) values(#{userid},#{messageid},#{action});
     </insert>
     <update id="update">
-
+        update likeskey set action = #{action} where userid = #{userid} and messageid = #{messageid};
     </update>
     <delete id="delete">
-
+        delete from likeskey where userid = #{userid} and messageid = #{messageid};
     </delete>
     <select id="selectByUserIdAndMessageId" resultType="com.jiechu.springboot.entity.Like">
-
+        select * from likeskey where userid = #{userid} and messageid = #{messageid};
     </select>
 </mapper>
