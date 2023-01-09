@@ -145,9 +145,9 @@ public class UserController {
         Random random = new Random();
         String newPassword = String.valueOf(random.nextInt(10000));
         String password = newPassword;
-        SecurePassword.securePassword(newPassword);
-        user.setPassword(newPassword);
-        if (userService.registerUser(user)){
+
+        user.setPassword(SecurePassword.securePassword(newPassword));
+        if (userService.resetPassword(user)){
             return Result.success(password);
         }
         return Result.error("重置错误");

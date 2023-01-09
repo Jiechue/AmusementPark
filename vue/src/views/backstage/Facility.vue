@@ -37,7 +37,7 @@
         background
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
-        :page-sizes="[1, 200, 300, 400]"
+        :page-sizes="[100, 200, 300, 400]"
         :small="small"
         :disabled="disabled"
         :background="background"
@@ -146,7 +146,7 @@ const state = reactive({
 })
 
 const currentPage = ref(1)
-const pageSize = ref(1)
+const pageSize = ref(100)
 const total = ref(0)
 const username = ref('')
 

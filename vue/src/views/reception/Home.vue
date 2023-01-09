@@ -12,7 +12,35 @@
         <el-button type="primary" @click="handleAdd"><el-icon style="margin-right: 3px"><Plus/></el-icon>新增</el-button>
       </div>
     </div>
-    <div style="text-align: center;width: 80%;margin-left: auto;margin-right: auto;position: relative">
+    <div style="width: 1024px;margin-left: auto;margin-right: auto;position: relative">
+      <div>
+        <div>全新奇幻巡游 开启冬日童话</div>
+        <div>迪士尼冬日奇幻冰雪节</div>
+        <div>当冬日的第一片雪花落在上海迪士尼度假区时，它绽放出了魔法。
+          2022年11月28日至2023年2月19日，
+          上海迪士尼度假区将迎来“迪士尼冬日奇幻冰雪节”。
+          一起庆祝冬天的到来吧！</div>
+        <div>乐园体验</div>
+        <ul>
+          <li style="width: 48%;display: inline-block;padding-bottom: 20px">
+            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+            <div>
+              <div>迪士尼奇幻冬日巡游</div>
+              <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
+              <div>*效果请以实际运营情况为准</div>
+            </div>
+          </li>
+          <li style="width: 48%;display: inline-block">
+            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+          </li>
+          <li style="width: 48%;display: inline-block">
+            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+          </li>
+          <li style="width: 48%;display: inline-block">
+            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+          </li>
+        </ul>
+      </div>
       <div>
         <div style="display: flex;justify-content: space-between;">
           <div title="门票价格" class="item">

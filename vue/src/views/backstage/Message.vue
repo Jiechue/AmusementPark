@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input style="width: 260px; margin-left: 10px" v-model="name" placeholder="请输入设施名称" clearable></el-input>
+    <el-input style="width: 260px; margin-left: 10px" v-model="name" placeholder="请输入要查询的内容" clearable></el-input>
 
     <el-button style="margin-left: 10px" type="primary" @click="load"><el-icon style="margin-right: 3px"><Search/></el-icon>查询</el-button>
 
@@ -18,7 +18,6 @@
 
     <el-table-column width="200px" label="操作">
       <template #default="scope">
-        <el-button link type="primary" size="small" @click="handleEdit(scope.row)"><el-icon><EditPen/></el-icon>编辑</el-button>
         <el-popconfirm title="确定删除吗？" @confirm="deleteRow(scope.row.id)" confirm-button-text="确定" cancel-button-text="取消">
           <template #reference>
             <el-button link type="danger" size="small"><el-icon><Delete/></el-icon>删除</el-button>
@@ -33,7 +32,7 @@
         background
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
-        :page-sizes="[1, 200, 300, 400]"
+        :page-sizes="[100, 200, 300, 400]"
         :small="small"
         :disabled="disabled"
         :background="background"
@@ -64,7 +63,7 @@ const state = reactive({
 
 })
 const currentPage = ref(1)
-const pageSize = ref(1)
+const pageSize = ref(100)
 const total = ref(0)
 const username = ref('')
 

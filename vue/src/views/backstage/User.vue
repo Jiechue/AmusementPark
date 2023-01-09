@@ -39,7 +39,7 @@
         background
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
-        :page-sizes="[1, 200, 300, 400]"
+        :page-sizes="[100, 200, 300, 400]"
         :small="small"
         :disabled="disabled"
         :background="background"
@@ -135,7 +135,7 @@ const state = reactive({
 })
 const url = ref('http://localhost:9090/api/user/file/upload?token=' + state.admin.token)
 const currentPage = ref(1)
-const pageSize = ref(1)
+const pageSize = ref(100)
 const total = ref(0)
 const username = ref('')
 const phone = ref('')
@@ -185,11 +185,16 @@ const handleAvatarSuccess = (res) => {
 }
 const handleReset = (row) => {
   state.form = JSON.parse(JSON.stringify(row))
+  console.log(state.form)
+  Reset()
+}
+const Reset = () => {
   proxy.$refs.ruleFormRef.validate((valid)=>{
     if (state.form.id){
-      request.put("/reset",state.form).then(res => {
+      request.put("/user/reset",state.form).then(res => {
+        console.log(res)
         if (res.code === '200'){
-          ElMessage.success("重置成功密码为:" + res.data.password)
+          ElMessage.success("重置成功密码为:" + res.data)
           dialogFormVisible.value = false;
           load()
         }else {

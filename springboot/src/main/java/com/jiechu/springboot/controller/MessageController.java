@@ -48,7 +48,7 @@ public class MessageController {
         List<Message> messages = messageService.showAllByFacilityId(id);
         for (Message message : messages){
             message.getId();
-            Like like = likeService.showByUserIdAndMessageId()
+//            Like like = likeService.showByUserIdAndMessageId()
         }
         return Result.success(messageService.showAllByFacilityId(id));
     }
