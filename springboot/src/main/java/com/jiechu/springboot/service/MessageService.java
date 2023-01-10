@@ -15,8 +15,8 @@ public interface MessageService {
     List<Message> showPageMessages(MessageQueryDTO messageQueryDTO);
     long count(MessageQueryDTO messageQueryDTO);
     Message showById(Integer id);
-    boolean addLike(Message message);
-    boolean addDisLike(Message message);
-    boolean reduceLike(Message message);
-    boolean reduceDisLike(Message message);
+    boolean addLike(Integer id);
+    boolean addDisLike(Integer id);
+    boolean reduceLike(Integer id);
+    boolean reduceDisLike(Integer id);
 }

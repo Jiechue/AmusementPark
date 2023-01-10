@@ -17,8 +17,8 @@ public interface MessageDao {
     List<Message> selectPageFacilities(MessageQueryDTO messageQueryDTO);
     long count(MessageQueryDTO messageQueryDTO);
     Message selectById(@Param("id")Integer id);
-    int updateAddLike(Message message);
-    int updateAddDisLike(Message message);
-    int updateReduceLike(Message message);
-    int updateReduceDisLike(Message message);
+    int updateAddLike(@Param("id")Integer id);
+    int updateAddDisLike(@Param("id")Integer id);
+    int updateReduceLike(@Param("id")Integer id);
+    int updateReduceDisLike(@Param("id")Integer id);
 }

@@ -32,6 +32,9 @@
             <if test="content !=null and content !=''">
                 and content like concat('%',#{content},'%')
             </if>
+            <if test="facilityid !=null and facilityid !=''">
+                and facilityid = #{facilityid}
+            </if>
         </where>
         limit #{pageNum},#{pageSize}
     </select>

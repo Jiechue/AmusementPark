@@ -57,32 +57,32 @@ public class MessageServiceImpl implements MessageService {
     }
 
     @Override
-    public boolean addLike(Message message) {
-        if (messageDao.updateAddLike(message)>0){
+    public boolean addLike(Integer id) {
+        if (messageDao.updateAddLike(id)>0){
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean addDisLike(Message message) {
-        if (messageDao.updateAddDisLike(message)>0){
+    public boolean addDisLike(Integer id) {
+        if (messageDao.updateAddDisLike(id)>0){
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean reduceLike(Message message) {
-        if (messageDao.updateReduceLike(message)>0){
+    public boolean reduceLike(Integer id) {
+        if (messageDao.updateReduceLike(id)>0){
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean reduceDisLike(Message message) {
-        if (messageDao.updateReduceDisLike(message)>0){
+    public boolean reduceDisLike(Integer id) {
+        if (messageDao.updateReduceDisLike(id)>0){
             return true;
         }
         return false;
