@@ -3,7 +3,7 @@
 
 <mapper namespace="com.jiechu.springboot.dao.MessageDao">
     <insert id="insert">
-
+        insert into user(content,password,realName,sex,age,phone,email,address,avatar) values(#{username},#{password},#{realName},#{sex},#{age},#{phone},#{email},#{address},#{avatar});
     </insert>
     <update id="updateAddLike">
         update message set liketotal = liketotal+1 where id = #{id}

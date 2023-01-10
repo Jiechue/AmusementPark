@@ -3,12 +3,10 @@ package com.jiechu.springboot.controller;
 import com.jiechu.springboot.common.Result;
 import com.jiechu.springboot.controller.DTO.AdminQueryDTO;
 import com.jiechu.springboot.controller.DTO.MessageQueryDTO;
-import com.jiechu.springboot.entity.Admin;
-import com.jiechu.springboot.entity.Facility;
-import com.jiechu.springboot.entity.Like;
-import com.jiechu.springboot.entity.Message;
+import com.jiechu.springboot.entity.*;
 import com.jiechu.springboot.service.LikeService;
 import com.jiechu.springboot.service.MessageService;
+import com.jiechu.springboot.utils.UserTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -44,11 +42,14 @@ public class MessageController {
     }
     @GetMapping("/list/{id}")
     public Result findMessagesByFacilityId(@PathVariable Integer id){
-        Integer userid = 0;
+        User user = UserTokenUtils.getCurrentUser();
         List<Message> messages = messageService.showAllByFacilityId(id);
         for (Message message : messages){
-            message.getId();
-//            Like like = likeService.showByUserIdAndMessageId()
+            Like like = null;
+            like = likeService.showByUserIdAndMessageId(user.getId(),message.getId());
+            if (like != null){
+                Integer action = like.getAction();
+            }
         }
         return Result.success(messageService.showAllByFacilityId(id));
     }
