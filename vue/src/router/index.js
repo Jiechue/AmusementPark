@@ -61,12 +61,18 @@ const routes = [
             {
                 path: 'facilities',
                 name: 'ReceptionFacilities',
-                component: () => import('../views/reception/Facility.vue')
+                component: () => import('../views/reception/Facilities.vue'),
+            },
+            {
+                path: 'facility',
+                name: 'ReceptionFacility',
+                component: () => import('../views/reception/Facility.vue'),
             }
         ]
     },
     {
-      path: "/*",
+      path: "/:catchAll(.*)",
+      name: "error",
       component: () => import('../views/error/404.vue')
     }
 ]

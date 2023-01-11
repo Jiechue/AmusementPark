@@ -6,14 +6,9 @@
           <h3 class="small justify-center" text="2xl">{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
-      <div style="text-align: center">
-        <el-input style="width: 260px; margin-left: 10px" v-model="name" placeholder="请输入设施分类名称" clearable></el-input>
-        <el-button style="margin-left: 10px" type="primary" @click="load"><el-icon style="margin-right: 3px"><Search/></el-icon>查询</el-button>
-        <el-button type="primary" @click="handleAdd"><el-icon style="margin-right: 3px"><Plus/></el-icon>新增</el-button>
-      </div>
     </div>
-    <div style="width: 1024px;margin-left: auto;margin-right: auto;position: relative">
-      <div>
+    <div style="width: 1024px;margin-left: auto;margin-right: auto;position: relative;">
+      <div style="background-color: white;border-radius: 20px;">
         <div>全新奇幻巡游 开启冬日童话</div>
         <div>迪士尼冬日奇幻冰雪节</div>
         <div>当冬日的第一片雪花落在上海迪士尼度假区时，它绽放出了魔法。
@@ -22,19 +17,53 @@
           一起庆祝冬天的到来吧！</div>
         <div>乐园体验</div>
         <ul>
-          <li style="width: 48%;display: inline-block;padding-bottom: 20px">
-            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
-            <div>
-              <div>迪士尼奇幻冬日巡游</div>
-              <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
-              <div>*效果请以实际运营情况为准</div>
+          <li class="list-li">
+            <div class="list-li-container">
+              <a href="http://localhost:8080">
+                <div style="width: 90%;height: 250px;margin: auto">
+                  <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+                </div>
+                <div style="margin: 10px;display: flex;justify-content: space-between;text-align: left">
+                  <div>
+                    <div>迪士尼奇幻冬日巡游</div>
+                    <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
+                    <div>*效果请以实际运营情况为准</div>
+                  </div>
+                  <div class="list-li-icon"></div>
+                </div>
+              </a>
+            </div>
+          </li>
+          <li class="list-li">
+            <div class="list-li-container">
+              <a href="http://localhost:8080">
+                <div style="width: 90%;height: 250px;margin: auto">
+                  <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+                </div>
+                <div style="margin: 10px;display: flex;justify-content: space-between">
+                  <div>
+                    <div>迪士尼奇幻冬日巡游</div>
+                    <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
+                    <div>*效果请以实际运营情况为准</div>
+                  </div>
+                  <div class="list-li-icon"></div>
+                </div>
+              </a>
             </div>
           </li>
           <li style="width: 48%;display: inline-block">
-            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
-          </li>
-          <li style="width: 48%;display: inline-block">
-            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+            <div class="list-li-container">
+              <a href="http://localhost:8080">
+                <div style="width: 90%;height: 250px;margin: auto">
+                  <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+                </div>
+                <div style="margin: 10px;">
+                  <div>迪士尼奇幻冬日巡游</div>
+                  <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
+                  <div>*效果请以实际运营情况为准</div>
+                </div>
+              </a>
+            </div>
           </li>
           <li style="width: 48%;display: inline-block">
             <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
@@ -176,7 +205,9 @@ const state = reactive({
 </script>
 
 <style scoped>
-
+:root{
+  --list-color: grey;
+}
 .el-carousel__item h3 {
   color: #475669;
   opacity: 0.75;
@@ -286,5 +317,59 @@ const state = reactive({
   padding: 10px 40px;
   color: white;
   border: 1px solid #fab516;
+}
+.list-li{
+  width: 48%;
+  display: inline-block;
+  /*height: 374px;*/
+  margin-bottom: 10px;
+  margin-right: 10px;
+}
+
+.list-li-container{
+  border-radius: 20px;
+  background-color: gray;
+  padding: 20px;
+}
+.list-li-container a:hover img{
+  transform:scale(105%,105%);
+  overflow: hidden;
+  transition: 0.3s;
+}
+.list-li-container a:hover .list-li-icon::before{
+  border-color: transparent transparent transparent yellow;
+}
+.list-li-container img{
+  border-radius: 20px;
+}
+a{
+  text-decoration: none;
+  color: black;
+}
+.list-li-icon{
+  width: 0;
+  height: 0;
+  top: 0;
+  left: 0;
+  border: 20px solid;
+  vertical-align: middle;
+  border-color: transparent transparent transparent gray;
+  position: relative;
+}
+.list-li-icon::before{
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  border: 18px solid;
+  border-color: transparent transparent transparent red;
+}
+.list-li-icon::after{
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 0;
+  border: 12px solid;
+  border-color: transparent transparent transparent gray;
 }
 </style>
