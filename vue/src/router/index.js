@@ -64,7 +64,7 @@ const routes = [
                 component: () => import('../views/reception/Facilities.vue'),
             },
             {
-                path: 'facility',
+                path: 'facility/:id',
                 name: 'ReceptionFacility',
                 component: () => import('../views/reception/Facility.vue'),
             }

@@ -9,9 +9,9 @@
       <ul style="padding-top: 10px">
         <li class="list-li">
           <div class="list-li-container">
-            <a href="http://localhost:8080">
+            <a @click="$router.push('/reception/facility/11')">
               <div style="width: 90%;height: 250px;margin: auto">
-                <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+                <img style="width: 100%;height: 100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
               </div>
               <div style="margin: 10px;display: flex;justify-content: space-between">
                 <div>
@@ -54,7 +54,7 @@ import {ElMessage} from "element-plus";
 import Cookies from "js-cookie";
 
 const state = reactive({
-  admin: Cookies.get('admin') ? JSON.parse(Cookies.get('admin')) : {},
+  user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
   list:[],
   form:{},
 })
