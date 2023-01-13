@@ -1,21 +1,30 @@
 <template>
-  <div style="text-align: center;margin: auto">
+  <div style="margin: auto;min-width: 1024px;height: 300px">
     <div class="block text-center">
-      <el-carousel height="150px">
+      <el-carousel height="300px">
         <el-carousel-item v-for="item in 4" :key="item">
           <h3 class="small justify-center" text="2xl">{{ item }}</h3>
         </el-carousel-item>
       </el-carousel>
     </div>
     <div style="width: 1024px;margin-left: auto;margin-right: auto;position: relative;">
-      <div style="background-color: white;border-radius: 20px;">
-        <div>全新奇幻巡游 开启冬日童话</div>
-        <div>迪士尼冬日奇幻冰雪节</div>
-        <div>当冬日的第一片雪花落在上海迪士尼度假区时，它绽放出了魔法。
-          2022年11月28日至2023年2月19日，
-          上海迪士尼度假区将迎来“迪士尼冬日奇幻冰雪节”。
-          一起庆祝冬天的到来吧！</div>
-        <div>乐园体验</div>
+      <div style="background-color: white;border-radius: 20px;padding-left: 20px;padding-right: 20px;box-shadow: 2px 2px 3px 2px rgb(0 0 0 / 10%);">
+        <div style="margin-left: 20px;margin-right: 20px;margin-top: 10px">
+          <h1>全新奇幻巡游 开启冬日童话</h1>
+          <div style="display: flex;justify-content: space-between">
+            <div style="width: 60%;font-size: 18px">当冬日的第一片雪花落在上海迪士尼度假区时，它绽放出了魔法。
+              2022年11月28日至2023年2月19日，
+              上海迪士尼度假区将迎来“迪士尼冬日奇幻冰雪节”。
+              一起庆祝冬天的到来吧！</div>
+            <div style="width: 28%;background-color: #ebf6fc;border-radius: 12px;padding: 20px">
+              <div>开放或演出时间</div>
+              <div>星期五</div>
+              <div>上午 8:30 至 晚上 9:30</div>
+            </div>
+          </div>
+          <div style="font-size: 20px">乐园体验</div>
+        </div>
+        <div><hr></div>
         <ul>
           <li class="list-li">
             <div class="list-li-container">
@@ -24,7 +33,7 @@
                   <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
                 </div>
                 <div style="margin: 10px;display: flex;justify-content: space-between;text-align: left">
-                  <div>
+                  <div class="list-li-text">
                     <div>迪士尼奇幻冬日巡游</div>
                     <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
                     <div>*效果请以实际运营情况为准</div>
@@ -57,7 +66,7 @@
                 <div style="width: 90%;height: 250px;margin: auto">
                   <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
                 </div>
-                <div style="margin: 10px;">
+                <div class="list-li-text">
                   <div>迪士尼奇幻冬日巡游</div>
                   <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
                   <div>*效果请以实际运营情况为准</div>
@@ -70,7 +79,7 @@
           </li>
         </ul>
       </div>
-      <div>
+      <div style="text-align: center">
         <div style="display: flex;justify-content: space-between;">
           <div title="门票价格" class="item">
             <div class="title-h2"><h2>门票价格</h2></div>
@@ -328,7 +337,7 @@ const state = reactive({
 
 .list-li-container{
   border-radius: 20px;
-  background-color: gray;
+  background-color: white;
   padding: 20px;
 }
 .list-li-container a:hover img{
@@ -337,7 +346,10 @@ const state = reactive({
   transition: 0.3s;
 }
 .list-li-container a:hover .list-li-icon::before{
-  border-color: transparent transparent transparent yellow;
+  border-color: transparent transparent transparent #1994d7;
+}
+.list-li-container a:hover .list-li-text{
+  color: #1994d7;
 }
 .list-li-container img{
   border-radius: 20px;
@@ -353,7 +365,7 @@ a{
   left: 0;
   border: 20px solid;
   vertical-align: middle;
-  border-color: transparent transparent transparent gray;
+  border-color: transparent transparent transparent white;
   position: relative;
 }
 .list-li-icon::before{
@@ -361,15 +373,18 @@ a{
   position: absolute;
   top: 0;
   left: 0;
-  border: 18px solid;
-  border-color: transparent transparent transparent red;
+  border: 16px solid;
+  border-color: transparent transparent transparent rgba(161,175,192,0.3);
 }
 .list-li-icon::after{
   content: '';
   position: absolute;
   top: 6px;
-  left: 0;
-  border: 12px solid;
-  border-color: transparent transparent transparent gray;
+  left: -2px;
+  border: 10px solid;
+  border-color: transparent transparent transparent white;
+}
+.list-li-text{
+  margin: 10px;
 }
 </style>

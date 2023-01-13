@@ -189,20 +189,18 @@ const handleReset = (row) => {
   Reset()
 }
 const Reset = () => {
-  proxy.$refs.ruleFormRef.validate((valid)=>{
-    if (state.form.id){
-      request.put("/user/reset",state.form).then(res => {
-        console.log(res)
-        if (res.code === '200'){
-          ElMessage.success("重置成功密码为:" + res.data)
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          ElMessage.error(res.msg)
-        }
-      })
-    }
-  })
+  if (state.form.id){
+    request.put("/user/reset",state.form).then(res => {
+      console.log(res)
+      if (res.code === '200'){
+        ElMessage.success("重置成功密码为:" + res.data)
+        dialogFormVisible.value = false;
+        load()
+      }else {
+        ElMessage.error(res.msg)
+      }
+    })
+  }
 }
 const Save = () => {
   proxy.$refs.ruleFormRef.validate((valid)=>{
