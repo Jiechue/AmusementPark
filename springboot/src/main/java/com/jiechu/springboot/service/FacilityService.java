@@ -15,4 +15,5 @@ public interface FacilityService {
     List<Facility> showPageFacilities(FacilityQueryDTO facilityQueryDTO);
     long count(FacilityQueryDTO facilityQueryDTO);
     Facility showFacilityById(Integer id);
+    List<Facility> showReception(Facility facility);
 }

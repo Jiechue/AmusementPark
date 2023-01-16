@@ -24,7 +24,7 @@
       <div style="padding: 15px 15px 15px 15px">
         <div>留言板</div>
         <div><hr></div>
-        <div>评论</div>
+        <div>发表评论</div>
         <div class="comment">
           <div class="comment-avatar">
             <el-avatar :size="50" :src="circleUrl" />

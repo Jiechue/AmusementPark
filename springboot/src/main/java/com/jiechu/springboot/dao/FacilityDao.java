@@ -16,4 +16,5 @@ public interface FacilityDao {
     List<Facility> selectPage(FacilityQueryDTO facilityQueryDTO);
     long count(FacilityQueryDTO facilityQueryDTO);
     Facility selectById(@Param("id") Integer id);
+    List<Facility> selectReception(Facility facility);
 }

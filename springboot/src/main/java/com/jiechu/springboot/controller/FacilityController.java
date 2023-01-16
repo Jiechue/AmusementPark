@@ -104,6 +104,10 @@ public class FacilityController {
     public Result show(){
         return Result.success(facilityService.showAllFacilities());
     }
+    @GetMapping("/list")
+    public Result showReception(Facility facility){
+        return Result.success(facilityService.showReception(facility));
+    }
     @PostMapping
     public Result add(@RequestBody Facility facility){
         System.out.println(facility.toString());

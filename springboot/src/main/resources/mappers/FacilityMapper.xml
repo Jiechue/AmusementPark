@@ -23,7 +23,7 @@
         limit #{pageNum},#{pageSize}
     </select>
     <select id="count" resultType="long">
-        select count(id) from admin
+        select count(id) from facility
         <where>
             <if test="name !=null and name !=''">
                 and name like concat('%',#{name},'%')
@@ -32,5 +32,16 @@
     </select>
     <select id="selectById" resultType="com.jiechu.springboot.entity.Facility">
         select * from admin where id = #{id};
+    </select>
+    <select id="selectReception" resultType="com.jiechu.springboot.entity.Facility">
+        select * from facility
+        <where>
+            <if test="name !=null and name !=''">
+                and name like concat('%',#{name},'%')
+            </if>
+            <if test="category !=null and category !=''">
+                and category like concat('%',#{category},'%')
+            </if>
+        </where>
     </select>
 </mapper>

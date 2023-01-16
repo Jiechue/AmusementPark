@@ -58,6 +58,11 @@ public class FacilityServiceImpl implements FacilityService {
         return facilityDao.selectById(id);
     }
 
+    @Override
+    public List<Facility> showReception(Facility facility) {
+        return facilityDao.selectReception(categoriesToCategory(facility));
+    }
+
     private Facility categoriesToCategory(Facility facility){
         List<String> categories = facility.getCategories();
         StringBuilder sb = new StringBuilder();
