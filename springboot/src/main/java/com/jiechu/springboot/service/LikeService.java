@@ -7,4 +7,6 @@ public interface LikeService {
     boolean delete (Like like);
     boolean update (Like like);
     Like showByUserIdAndMessageId(Integer userid,Integer messageid);
+    boolean addFacility (Like like);
+    boolean deleteFacility (Like like);
 }

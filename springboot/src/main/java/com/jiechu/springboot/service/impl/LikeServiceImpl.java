@@ -38,4 +38,20 @@ public class LikeServiceImpl implements LikeService {
     public Like showByUserIdAndMessageId(Integer userid,Integer messageid) {
         return likeDao.selectByUserIdAndMessageId(userid,messageid);
     }
+
+    @Override
+    public boolean addFacility(Like like) {
+        if (likeDao.insertFacility(like)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean deleteFacility(Like like) {
+        if (likeDao.deleteFacility(like)>0){
+            return true;
+        }
+        return false;
+    }
 }

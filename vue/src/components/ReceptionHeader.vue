@@ -13,16 +13,35 @@
         background-color="#545c64"
         text-color="#fff"
         active-text-color="#ffd04b"
-        style="width: 70%"
+        style="width: 50%;margin-left: 20px"
     >
       <el-menu-item index="/reception">首页</el-menu-item>
       <el-menu-item index="/reception/facilities">乐园设施</el-menu-item>
+      <el-menu-item index="/reception/ticket">乐园门票</el-menu-item>
+      <el-sub-menu index="2">
+        <template #title>须知及帮助</template>
+        <el-menu-item index="2-1">帮助中心</el-menu-item>
+        <el-menu-item index="2-2">游客服务</el-menu-item>
+        <el-menu-item index="2-3">无障碍服务</el-menu-item>
+        <el-menu-item index="2-4">联系我们</el-menu-item>
+        <el-menu-item index="2-5">电子邮件</el-menu-item>
+        <el-menu-item index="2-6">在线咨询</el-menu-item>
+        <el-menu-item index="2-7">手机APP</el-menu-item>
+        <el-sub-menu index="2-8">
+          <template #title><span style="font-weight: bold">须知</span></template>
+          <el-menu-item index="2-8-1">游客须知</el-menu-item>
+          <el-menu-item index="2-8-2">酒店须知</el-menu-item>
+          <el-menu-item index="2-8-3">公园须知</el-menu-item>
+        </el-sub-menu>
+        <hr style="color: #8c939d">
+        <div style="color: white;width: 190px;font-size: 15px;padding-right: 20px">游览上海迪士尼度假区期间，如需咨询请致电预订服务中心：400-180-0000（中国内地）或31580000（其他国家/地区）。</div>
+      </el-sub-menu>
 <!--      <el-menu-item index="3" disabled>Info</el-menu-item>-->
 <!--      <el-menu-item index="4">Orders</el-menu-item>-->
     </el-menu>
     <div style="flex: 1;text-align: right;padding-right: 20px;padding-top: 22px;width: 100px">
-      <el-dropdown size="large" style="height: 100%;justify-content: space-between">
-        <span style="cursor: pointer;color: #fff"><el-avatar :size="25" :src="state.user.avatar" style="position: absolute;right: 60px;top: -4px"/>{{ state.user.username }}<el-icon color="#fff"><ArrowDown /></el-icon></span>
+      <el-dropdown size="large" style="height: 100%;justify-content: space-between;width: 160px">
+        <span style="cursor: pointer;color: #fff"><el-avatar :size="25" :src="state.user.avatar" style="position: absolute;right: 164px;top: -4px"/>{{ state.user.username }}<el-icon color="#fff"><ArrowDown /></el-icon></span>
         <template #dropdown>
           <el-dropdown-menu>
             <el-dropdown-item v-if="state.user.token" @click="Logout">退出</el-dropdown-item>

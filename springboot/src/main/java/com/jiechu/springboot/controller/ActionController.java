@@ -2,6 +2,7 @@ package com.jiechu.springboot.controller;
 
 import com.jiechu.springboot.common.Result;
 import com.jiechu.springboot.controller.DTO.MessageResultByUserDTO;
+import com.jiechu.springboot.entity.Facility;
 import com.jiechu.springboot.entity.Like;
 import com.jiechu.springboot.entity.User;
 import com.jiechu.springboot.service.LikeService;
@@ -23,7 +24,7 @@ public class ActionController {
         Like like = new Like();
         User user = UserTokenUtils.getCurrentUser();
         Integer id = messageResultByUserDTO.getId();
-        like.setMessageid(id);
+        like.setTargetid(id);
         like.setUserid(user.getId());
         like.setAction(1);
 
@@ -50,7 +51,7 @@ public class ActionController {
         Like like = new Like();
         User user = UserTokenUtils.getCurrentUser();
         Integer id = messageResultByUserDTO.getId();
-        like.setMessageid(id);
+        like.setTargetid(id);
         like.setUserid(user.getId());
         like.setAction(0);
 
@@ -71,6 +72,10 @@ public class ActionController {
             return Result.success("不喜欢成功");
         }
         return Result.error("不喜欢失败");
+    }
+    @PostMapping("/likeFacility")
+    public Result likeFacility(Facility facility){
+        return null;
     }
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id){

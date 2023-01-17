@@ -16,4 +16,6 @@ public interface FacilityService {
     long count(FacilityQueryDTO facilityQueryDTO);
     Facility showFacilityById(Integer id);
     List<Facility> showReception(Facility facility);
+    boolean addLikeTotal(Facility facility);
+    boolean reduceLikeTotal(Facility facility);
 }

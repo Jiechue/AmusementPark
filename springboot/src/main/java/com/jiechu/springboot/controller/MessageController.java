@@ -96,13 +96,17 @@ public class MessageController {
 
         List<Message> messages = messageService.showPageMessages(messageQueryDTO);
         long total = messageService.count(messageQueryDTO);
-
-        User user = UserTokenUtils.getCurrentUser();
+        User user = null;
+        if (UserTokenUtils.getCurrentUser() !=null){
+            user = UserTokenUtils.getCurrentUser();
+        }
         List<MessageResultByUserDTO> messageResultByUserDTOList = new ArrayList<>();
         for (Message message : messages){
             MessageResultByUserDTO messageResultByUserDTO = new MessageResultByUserDTO();
             Like like = null;
-            like = likeService.showByUserIdAndMessageId(user.getId(),message.getId());
+            if (user != null){
+                like = likeService.showByUserIdAndMessageId(user.getId(),message.getId());
+            }
 
             messageResultByUserDTO.setLike(false);
             messageResultByUserDTO.setDislike(false);

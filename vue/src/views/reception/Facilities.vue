@@ -1,6 +1,6 @@
 <template>
   <div style="width: 1024px;margin-left: auto;margin-right: auto;position: relative;">
-    <div style="text-align: center">
+    <div style="text-align: center;margin-top: 10px">
       <el-cascader
           :props="{value: 'name', label: 'name'}"
           v-model="categories"
@@ -8,7 +8,6 @@
       ></el-cascader>
       <el-input style="width: 260px; margin-left: 10px" v-model="name" placeholder="请输入要查询的设施名称" clearable></el-input>
       <el-button style="margin-left: 10px" type="primary" @click="load"><el-icon style="margin-right: 3px"><Search/></el-icon>查询</el-button>
-      <el-button type="primary" @click="handleAdd"><el-icon style="margin-right: 3px"><Plus/></el-icon>新增</el-button>
     </div>
     <div style="background-color: white;border-radius: 20px;box-shadow: 2px 2px 3px 2px rgb(0 0 0 / 10%);">
       <ul style="padding-top: 10px">
@@ -84,6 +83,7 @@ const load = () => {
     if (res.code === '200'){
       console.log(res)
       state.list = res.data
+      console.log(state.list)
     }
   })
 }

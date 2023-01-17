@@ -5,6 +5,6 @@ import lombok.Data;
 @Data
 public class Like {
     private Integer userid;
-    private Integer messageid;
+    private Integer targetid;
     private Integer action;
 }

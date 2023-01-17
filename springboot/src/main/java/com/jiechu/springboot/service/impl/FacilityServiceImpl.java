@@ -63,6 +63,22 @@ public class FacilityServiceImpl implements FacilityService {
         return facilityDao.selectReception(categoriesToCategory(facility));
     }
 
+    @Override
+    public boolean addLikeTotal(Facility facility) {
+        if (facilityDao.updateAddTotalLike(facility)>0){
+            return true;
+        }
+        return false;
+    }
+
+    @Override
+    public boolean reduceLikeTotal(Facility facility) {
+        if (facilityDao.updateReduceTotalLike(facility)>0){
+            return true;
+        }
+        return false;
+    }
+
     private Facility categoriesToCategory(Facility facility){
         List<String> categories = facility.getCategories();
         StringBuilder sb = new StringBuilder();
@@ -72,4 +88,5 @@ public class FacilityServiceImpl implements FacilityService {
         }
         return facility;
     }
+
 }

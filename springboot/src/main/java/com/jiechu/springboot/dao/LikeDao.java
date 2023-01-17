@@ -10,4 +10,6 @@ public interface LikeDao {
     int update(Like like);
     int delete(Like like);
     Like selectByUserIdAndMessageId(@Param("userid")Integer userid,@Param("messageid")Integer messageid);
+    int insertFacility(Like like);
+    int deleteFacility(Like like);
 }

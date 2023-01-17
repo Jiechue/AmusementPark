@@ -144,7 +144,7 @@ const load = () => {
   request.get("/user/page",{
     params: {
       currentPage: currentPage.value,
-      pageSize: pageSize.value,
+      pageSize: pageSize.value,图片
       username: username.value,
       phone: phone.value,
       email: email.value

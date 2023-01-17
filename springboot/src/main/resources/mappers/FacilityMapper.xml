@@ -7,6 +7,12 @@
     <update id="update">
         update facility set category = #{category},name = #{name},opentime = #{opentime},price = #{price},description = #{description},enable = #{enable},cover = #{cover},updatetime = #{updatetime} where id = #{id};
     </update>
+    <update id="updateReduceTotalLike">
+        update facility set liketotal = liketotal-1 where id = #{id}
+    </update>
+    <update id="updateAddTotalLike">
+        update facility set liketotal = liketotal+1 where id = #{id}
+    </update>
     <delete id="delete">
         delete from facility where id = #{id};
     </delete>

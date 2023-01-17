@@ -100,6 +100,10 @@ public class FacilityController {
 //        return Result.success(new PageInfo<>(users));
 
     }
+    @GetMapping("/{id}")
+    public Result findById(@PathVariable Integer id){
+        return Result.success(facilityService.showFacilityById(id));
+    }
     @GetMapping
     public Result show(){
         return Result.success(facilityService.showAllFacilities());
