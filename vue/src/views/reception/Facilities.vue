@@ -3,49 +3,33 @@
     <div style="text-align: center;margin-top: 10px">
       <el-cascader
           :props="{value: 'name', label: 'name'}"
-          v-model="categories"
+          v-model="state.queryForm.categories"
           :options="state.categories"
       ></el-cascader>
-      <el-input style="width: 260px; margin-left: 10px" v-model="name" placeholder="请输入要查询的设施名称" clearable></el-input>
+      <el-input style="width: 260px; margin-left: 10px" v-model="state.queryForm.name" placeholder="请输入要查询的设施名称" clearable></el-input>
       <el-button style="margin-left: 10px" type="primary" @click="load"><el-icon style="margin-right: 3px"><Search/></el-icon>查询</el-button>
     </div>
     <div style="background-color: white;border-radius: 20px;box-shadow: 2px 2px 3px 2px rgb(0 0 0 / 10%);">
       <ul style="padding-top: 10px">
-        <li class="list-li">
+        <li class="list-li" v-for="(item) in state.list">
           <div class="list-li-container">
-            <a @click="$router.push('/reception/facility/11')">
+            <a @click="$router.push('/reception/facility/'+item.id)">
               <div style="width: 90%;height: 250px;margin: auto">
-                <img style="width: 100%;height: 100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+                <img style="width: 100%;height: 100%" :src="item.cover">
               </div>
               <div style="margin: 10px;display: flex;justify-content: space-between">
                 <div class="list-li-text">
-                  <h3>迪士尼奇幻冬日巡游</h3>
-                  <div style="display: flex;">
-                    <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
-                    <div style="width: 280px;margin-left: 20px;vertical-align: top">
+                  <h3>{{ item.name }}</h3>
+                  <div style="display: flex;justify-content: space-between;width: 400px">
+                    <div>{{ item.description }}</div>
+                    <div style="margin-left: 20px;vertical-align: top;">
                       <div style="font-weight: bold">开放时间</div>
-                      <div style="font-size: 10px">上午 8:30至晚上 9:30</div>
-                      <div style="font-size: 10px">游客身高：</div>
+                      <div style="font-size: 10px">{{ item.opentime }}</div>
+                      <div style="font-size: 10px">游客身高：{{item.height}}</div>
+                      <div style="font-size: 10px">适合年龄：{{item.age}}</div>
                     </div>
                   </div>
-                  <div>*效果请以实际运营情况为准</div>
-                </div>
-                <div class="list-li-icon"></div>
-              </div>
-            </a>
-          </div>
-        </li>
-        <li class="list-li">
-          <div class="list-li-container">
-            <a href="http://localhost:8080">
-              <div style="width: 90%;height: 250px;margin: auto">
-                <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
-              </div>
-              <div style="margin: 10px;display: flex;justify-content: space-between">
-                <div>
-                  <h3></h3>
-                  <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
-                  <div>*效果请以实际运营情况为准</div>
+                  <div>好评数：{{item.totallike}}</div>
                 </div>
                 <div class="list-li-icon"></div>
               </div>
@@ -68,22 +52,18 @@ const state = reactive({
   user: Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
   list:[],
   form:{},
-  categories:[]
+  categories:[],
+  queryForm:{}
 })
 
 const categories = ref('')
 const name = ref('')
 const load = () => {
-  request.get("/facility/",{
-    params: {
-      name: name.value,
-      categories: categories.value
-    }
-  }).then(res =>{
+  console.log(categories.value)
+  request.post("/facility/list", state.queryForm).then(res =>{
     if (res.code === '200'){
       console.log(res)
       state.list = res.data
-      console.log(state.list)
     }
   })
 }

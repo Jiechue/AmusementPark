@@ -15,8 +15,12 @@ request.interceptors.request.use(config => {
     config.headers['Content-Type'] = 'application/json;charset=utf-8';
 
     const adminJson = Cookies.get('admin')
+    const userJson = Cookies.get('user')
     if (adminJson){
         config.headers['token'] = JSON.parse(adminJson).token
+    }
+    if (userJson){
+        config.headers['userToken'] = JSON.parse(userJson).token
     }
     // config.headers['token'] = user.token;  // 设置请求头
     return config
@@ -39,6 +43,9 @@ request.interceptors.response.use(
         }
         if (res.code === '401'){
             router.push('/login')
+        }
+        if (res.code === '402'){
+            ElMessage.error("未登陆，请登陆后重试")
         }
         return res;
     },

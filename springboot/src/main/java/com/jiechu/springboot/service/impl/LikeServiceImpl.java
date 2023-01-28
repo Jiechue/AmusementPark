@@ -54,4 +54,9 @@ public class LikeServiceImpl implements LikeService {
         }
         return false;
     }
+
+    @Override
+    public Like showFacilityByUserIdAndMessageId(Integer userid, Integer facilityid) {
+        return likeDao.selectFacilityByUserIdAndMessageId(userid,facilityid);
+    }
 }

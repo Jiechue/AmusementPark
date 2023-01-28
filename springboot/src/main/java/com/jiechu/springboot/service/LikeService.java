@@ -9,4 +9,5 @@ public interface LikeService {
     Like showByUserIdAndMessageId(Integer userid,Integer messageid);
     boolean addFacility (Like like);
     boolean deleteFacility (Like like);
+    Like showFacilityByUserIdAndMessageId(Integer userid,Integer facilityid);
 }

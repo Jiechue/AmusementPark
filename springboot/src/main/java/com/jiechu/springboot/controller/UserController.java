@@ -87,7 +87,7 @@ public class UserController {
         if (user.getUsername() == null||user.getPassword()==null){
             return Result.error("参数错误");
         }
-        UserLoginDTO res = userService.login(user.getUsername(), SecurePassword.securePassword(user.getPassword()));
+        UserLoginDTO res = userService.login(user.getUsername(), user.getPassword());
         if(res == null){
             return Result.error("用户名或密码错误");
         }

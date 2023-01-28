@@ -1,7 +1,7 @@
 <template>
   <div>
     <el-menu :default-active="$route.path" :default-openeds="['/backstage']" router class="el-menu-demo" style="width: 150px">
-      <el-menu-item index="/backstage">
+      <el-menu-item index="/backstage/">
         <el-icon><Eleme/></el-icon>
         <span>首页</span>
       </el-menu-item>

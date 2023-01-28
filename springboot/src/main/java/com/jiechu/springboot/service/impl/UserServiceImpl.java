@@ -25,7 +25,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserLoginDTO login(String username, String password) {
-        User user = userDao.findUser(username,password);
+        User user = userDao.findUser(username,SecurePassword.securePassword(password));
         if (user == null){
             throw new ServiceException("用户名或密码错误");
         }

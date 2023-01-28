@@ -49,21 +49,21 @@ public class UserTokenUtils {
      *
      */
     public static User getCurrentUser() {
-        String token = null;
+        String userToken = null;
         try {
             HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.getRequestAttributes()).getRequest();
-            token = request.getHeader("token");//标头获取token
-            if (StrUtil.isBlank(token)) { //header没有，就从参数获取
-                token = request.getParameter("token");//参数获取token /user?token=???
+            userToken = request.getHeader("userToken");//标头获取token
+            if (StrUtil.isBlank(userToken)) { //header没有，就从参数获取
+                userToken = request.getParameter("userToken");//参数获取token /user?token=???
             }
-            if (StrUtil.isBlank(token)) {
-                log.error("获取当前登录的token失败， token: {}", token);
+            if (StrUtil.isBlank(userToken)) {
+                log.error("获取当前登录的token失败， token: {}", userToken);
                 return null;
             }
-            String userId = JWT.decode(token).getAudience().get(0);
+            String userId = JWT.decode(userToken).getAudience().get(0);
             return staticUserService.showUserById(Integer.valueOf(userId));
         } catch (Exception e) {
-            log.error("获取当前登录的用户信息失败, token={}", token,  e);
+            log.error("获取当前登录的用户信息失败, token={}", userToken,  e);
             return null;
         }
     }

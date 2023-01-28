@@ -5,13 +5,15 @@ import cn.hutool.core.util.StrUtil;
 import com.jiechu.springboot.common.Result;
 import com.jiechu.springboot.controller.DTO.FacilityCategoryQueryDTO;
 import com.jiechu.springboot.controller.DTO.FacilityQueryDTO;
-import com.jiechu.springboot.entity.Admin;
-import com.jiechu.springboot.entity.Facility;
-import com.jiechu.springboot.entity.FacilityCategory;
+import com.jiechu.springboot.controller.DTO.FacilityResultByUserDTO;
+import com.jiechu.springboot.entity.*;
 import com.jiechu.springboot.exception.ServiceException;
 import com.jiechu.springboot.service.FacilityService;
+import com.jiechu.springboot.service.LikeService;
 import com.jiechu.springboot.utils.AdminTokenUtils;
+import com.jiechu.springboot.utils.UserTokenUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,6 +30,8 @@ import java.util.Map;
 public class FacilityController {
     @Autowired
     FacilityService facilityService;
+    @Autowired
+    LikeService likeService;
     private static final String BASE_FILE_PATH = System.getProperty("facility.dir") + "/files/";
     @PostMapping("/file/upload")
     public Result File(MultipartFile file) {
@@ -102,14 +106,33 @@ public class FacilityController {
     }
     @GetMapping("/{id}")
     public Result findById(@PathVariable Integer id){
-        return Result.success(facilityService.showFacilityById(id));
+        Facility facility = facilityService.showFacilityById(id);
+        FacilityResultByUserDTO facilityResultByUserDTO = new FacilityResultByUserDTO();
+        BeanUtils.copyProperties(facility,facilityResultByUserDTO);
+        facilityResultByUserDTO.setLike(false);
+        User user = null;
+        if (UserTokenUtils.getCurrentUser() !=null){
+            user = UserTokenUtils.getCurrentUser();
+            Like like = null;
+            like = likeService.showFacilityByUserIdAndMessageId(user.getId(),facility.getId());
+            if (like != null){
+                facilityResultByUserDTO.setLike(true);
+                return Result.success(facilityResultByUserDTO);
+            }
+        }
+        return Result.success(facilityResultByUserDTO);
     }
     @GetMapping
     public Result show(){
         return Result.success(facilityService.showAllFacilities());
     }
-    @GetMapping("/list")
-    public Result showReception(Facility facility){
+    @GetMapping("/home")
+    public Result showHome(){
+        return Result.success(facilityService.showReceptionHome());
+    }
+    @PostMapping("/list")
+    public Result showReception(@RequestBody Facility facility){
+        System.out.println(facility.toString());
         return Result.success(facilityService.showReception(facility));
     }
     @PostMapping

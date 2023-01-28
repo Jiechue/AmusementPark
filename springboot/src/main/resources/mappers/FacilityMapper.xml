@@ -2,10 +2,10 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiechu.springboot.dao.FacilityDao">
     <insert id="insert">
-        insert into facility(category,name,opentime,price,description,enable,cover) values(#{category},#{name},#{opentime},#{price},#{description},#{enable},#{cover});
+        insert into facility(category,name,opentime,price,description,enable,cover,height,age,`show`,liketotal) values(#{category},#{name},#{opentime},#{price},#{description},#{enable},#{cover},#{height},#{age},#{show},0);
     </insert>
     <update id="update">
-        update facility set category = #{category},name = #{name},opentime = #{opentime},price = #{price},description = #{description},enable = #{enable},cover = #{cover},updatetime = #{updatetime} where id = #{id};
+        update facility set category = #{category},name = #{name},opentime = #{opentime},price = #{price},description = #{description},enable = #{enable},cover = #{cover},updatetime = #{updatetime},height = #{height},age = #{age},`show` = #{show} where id = #{id};
     </update>
     <update id="updateReduceTotalLike">
         update facility set liketotal = liketotal-1 where id = #{id}
@@ -37,7 +37,7 @@
         </where>
     </select>
     <select id="selectById" resultType="com.jiechu.springboot.entity.Facility">
-        select * from admin where id = #{id};
+        select * from facility where id = #{id};
     </select>
     <select id="selectReception" resultType="com.jiechu.springboot.entity.Facility">
         select * from facility
@@ -49,5 +49,8 @@
                 and category like concat('%',#{category},'%')
             </if>
         </where>
+    </select>
+    <select id="selectReceptionHome" resultType="com.jiechu.springboot.entity.Facility">
+        select * from facility where `show` = 1;
     </select>
 </mapper>

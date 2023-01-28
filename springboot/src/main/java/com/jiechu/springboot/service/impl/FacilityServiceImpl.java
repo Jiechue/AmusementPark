@@ -64,19 +64,24 @@ public class FacilityServiceImpl implements FacilityService {
     }
 
     @Override
-    public boolean addLikeTotal(Facility facility) {
-        if (facilityDao.updateAddTotalLike(facility)>0){
+    public boolean addLikeTotal(Integer id) {
+        if (facilityDao.updateAddTotalLike(id)>0){
             return true;
         }
         return false;
     }
 
     @Override
-    public boolean reduceLikeTotal(Facility facility) {
-        if (facilityDao.updateReduceTotalLike(facility)>0){
+    public boolean reduceLikeTotal(Integer id) {
+        if (facilityDao.updateReduceTotalLike(id)>0){
             return true;
         }
         return false;
+    }
+
+    @Override
+    public List<Facility> showReceptionHome() {
+        return facilityDao.selectReceptionHome();
     }
 
     private Facility categoriesToCategory(Facility facility){

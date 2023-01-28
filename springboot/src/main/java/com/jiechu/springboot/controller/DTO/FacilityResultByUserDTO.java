@@ -1,13 +1,12 @@
-package com.jiechu.springboot.entity;
+package com.jiechu.springboot.controller.DTO;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @Data
-public class Facility {
+public class FacilityResultByUserDTO {
     private Integer id;
     private String category;
     private String name;
@@ -24,5 +23,5 @@ public class Facility {
     private String age;
     private boolean show;
     private Integer liketotal;
-    private List<String> categories;
+    private boolean Like;
 }

@@ -8,7 +8,7 @@
         insert into facilitylikeskey(userid,targetid) values(#{userid},#{targetid});
     </insert>
     <update id="update">
-        update likeskey set action = #{action} where userid = #{userid} and messageid = #{targetid};
+        update likeskey set action = #{action} where userid = #{userid} and targetid = #{targetid};
     </update>
     <delete id="delete">
         delete from likeskey where userid = #{userid} and targetid = #{targetid};
@@ -17,6 +17,9 @@
         delete from facilitylikeskey where userid = #{userid} and targetid = #{targetid};
     </delete>
     <select id="selectByUserIdAndMessageId" resultType="com.jiechu.springboot.entity.Like">
-        select * from likeskey where userid = #{userid} and targetid = #{targetid};
+        select * from likeskey where userid = #{userid} and targetid = #{messageid};
+    </select>
+    <select id="selectFacilityByUserIdAndMessageId" resultType="com.jiechu.springboot.entity.Like">
+        select * from facilitylikeskey where userid = #{userid} and targetid = #{facilityid};
     </select>
 </mapper>

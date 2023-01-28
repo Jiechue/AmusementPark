@@ -6,7 +6,7 @@
     </div>
     <el-menu
         :default-active="$route.path"
-        :default-openeds="['/reception']"
+        :default-openeds="['/reception/']"
         router
         class="el-menu-demo"
         mode="horizontal"
@@ -15,7 +15,7 @@
         active-text-color="#ffd04b"
         style="width: 50%;margin-left: 20px"
     >
-      <el-menu-item index="/reception">首页</el-menu-item>
+      <el-menu-item index="/reception/">首页</el-menu-item>
       <el-menu-item index="/reception/facilities">乐园设施</el-menu-item>
       <el-menu-item index="/reception/ticket">乐园门票</el-menu-item>
       <el-sub-menu index="2">
@@ -46,8 +46,8 @@
           <el-dropdown-menu>
             <el-dropdown-item v-if="state.user.token" @click="Logout">退出</el-dropdown-item>
             <el-dropdown-item v-if="!state.user.token" @click="showLogin">登陆</el-dropdown-item>
-            <el-dropdown-item v-if="!state.user.token" @click="">注册</el-dropdown-item>
-            <el-dropdown-item v-if="state.user.token" @click="">个人信息</el-dropdown-item>
+            <el-dropdown-item v-if="!state.user.token" @click="handleAdd">注册</el-dropdown-item>
+            <el-dropdown-item v-if="state.user.token" @click="handleEdit(state.user)">个人信息</el-dropdown-item>
             <el-dropdown-item v-if="state.user.token" @click="showUpdatePassword(state.user.id)">修改密码</el-dropdown-item>
           </el-dropdown-menu>
         </template>
@@ -55,18 +55,18 @@
     </div>
   </div>
 
-  <el-dialog v-model="dialogFormVisible" title="登陆">
+  <el-dialog v-model="dialogLoginFormVisible" title="登陆">
     <el-form :model="state.form" :rules="state.rules" ref="ruleFormRef" label-width="120px" style="width: 85%">
       <el-form-item label="用户名" prop="name" label-width="formLabelWidth">
-        <el-input v-model="state.form.username" autocomplete="off" placeholder="请输入用户名"/>
+        <el-input v-model="user.username" autocomplete="off" placeholder="请输入用户名"/>
       </el-form-item>
       <el-form-item label="密码" prop="remark" label-width="formLabelWidth">
-        <el-input v-model="state.form.password" autocomplete="off" placeholder="请输入密码"/>
+        <el-input v-model="user.password" autocomplete="off" placeholder="请输入密码"/>
       </el-form-item>
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button @click="dialogLoginFormVisible = false">取消</el-button>
         <el-button type="primary" @click="Login">登陆</el-button>
       </span>
     </template>
@@ -88,6 +88,52 @@
       </span>
     </template>
   </el-dialog>
+
+  <el-dialog v-model="dialogFormVisible" title="用户信息">
+    <el-form :model="state.form" :rules="state.rules" ref="ruleFormRef" label-width="120px" style="width: 85%">
+      <el-form-item label="用户名" prop="username" label-width="formLabelWidth">
+        <el-input v-model="state.form.username" autocomplete="off" placeholder="请输入用户名"/>
+      </el-form-item>
+      <el-form-item label="真实姓名" prop="realName" label-width="formLabelWidth">
+        <el-input v-model="state.form.realName" autocomplete="off" placeholder="请输入真实姓名"/>
+      </el-form-item>
+      <el-form-item label="性别" prop="sex" label-width="formLabelWidth">
+        <el-radio-group v-model="state.form.sex" class="ml-4">
+          <el-radio label="男">男</el-radio>
+          <el-radio label="女">女</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="年龄" prop="age" label-width="formLabelWidth">
+        <el-input v-model="state.form.age" autocomplete="off" placeholder="请输入年龄"/>
+      </el-form-item>
+      <el-form-item label="电话号码" prop="phone" label-width="formLabelWidth">
+        <el-input v-model="state.form.phone" autocomplete="off" placeholder="请输入电话号码"/>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email" label-width="formLabelWidth">
+        <el-input v-model="state.form.email" autocomplete="off" placeholder="请输入邮箱"/>
+      </el-form-item>
+      <el-form-item label="地址" prop="address" label-width="formLabelWidth">
+        <el-input type="textarea" v-model="state.form.address" autocomplete="off" placeholder="请输入地址"/>
+      </el-form-item>
+      <el-form-item label="头像" prop="avatar" label-width="formLabelWidth">
+        <el-upload
+            class="avatar-uploader"
+            :action="'http://localhost:9090/api/user/file/upload?token=' + state.user.token"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+        >
+          <img v-if="state.form.avatar" :src="state.form.avatar" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        </el-upload>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="Save">保存</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -100,9 +146,19 @@ import { Eleme } from '@element-plus/icons-vue'
 import {getCurrentInstance, reactive, ref} from "vue";
 
 const { proxy } = getCurrentInstance()
+
 const dialogFormVisible = ref(false)
 const dialogFormPasswordVisible = ref(false)
+const dialogLoginFormVisible = ref(false)
 
+const checkEmail = (rule, value, callback) => {
+  if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value)){
+    return callback(new Error('邮箱格式错误'))
+  }
+  callback()
+}
+
+const user = reactive({})
 const state = reactive({
   user : Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {},
   tableDate:[],
@@ -110,6 +166,9 @@ const state = reactive({
   rules :{
     username:[
       {required: true, message: '请输入用户名', trigger: 'blur'}
+    ],
+    email: [
+      {validator: checkEmail,target: 'blur'}
     ],
     password: [
       {required: true, message:'请输入密码', trigger: 'blur'},
@@ -119,7 +178,7 @@ const state = reactive({
 })
 console.log(state.user)
 const showLogin = () =>{
-  dialogFormVisible.value=true
+  dialogLoginFormVisible.value=true
 }
 const showUpdatePassword = (row) =>{
   dialogFormPasswordVisible.value=true
@@ -132,7 +191,7 @@ const Login = () =>{
       //Promise
       //往后台发请求 http://localhost:9090 /user/login
       // 后台数据格式{"code": "200","msg":"","data"：null}
-      request.post('/user/login',state.form).then(res => {
+      request.post('/user/login',user).then(res => {
         console.log(res)
         if (res.code === '200'){ //请求成功
           ElMessage({
@@ -190,6 +249,50 @@ const Logout = () =>{
   location.reload();
 }
 
+const handleAdd = () => {
+  dialogFormVisible.value= true
+  state.form = {}
+}
+
+const handleEdit = (row) => {
+  dialogFormVisible.value= true
+  state.form = JSON.parse(JSON.stringify(row))
+}
+
+const Save = () => {
+  proxy.$refs.ruleFormRef.validate((valid)=>{
+    if (state.form.id){//如果id存在则为编辑
+      request.put("/user",state.form).then(res => {
+        if (res.code === '200'){
+          ElMessage.success("保存成功")
+          dialogFormVisible.value = false;
+          load()
+        }else {
+          ElMessage.error(res.msg)
+        }
+      })
+    }else {
+      console.log(state.form)
+      request.post("/user",state.form).then(res => {
+        if (res.code === '200'){
+          ElMessage.success("保存成功")
+          dialogFormVisible.value = false;
+          load()
+        }else {
+          console.log(res)
+          ElMessage.error(res.msg)
+        }
+      })
+    }
+  })
+}
+const handleAvatarSuccess = (res) => {
+  state.form.avatar = {avatar: ''}
+  console.log(res.data)
+  if (res.code === '200'){
+    state.form.avatar = res.data
+  }
+}
 </script>
 
 <style scoped>

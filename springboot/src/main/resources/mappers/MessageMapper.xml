@@ -3,7 +3,7 @@
 
 <mapper namespace="com.jiechu.springboot.dao.MessageDao">
     <insert id="insert">
-        insert into user(content,password,realName,sex,age,phone,email,address,avatar) values(#{username},#{password},#{realName},#{sex},#{age},#{phone},#{email},#{address},#{avatar});
+        insert into message(content,userid,facilityid,liketotal,disliketotal) values(#{content},#{userid},#{facilityid},0,0);
     </insert>
     <update id="updateAddLike">
         update message set liketotal = liketotal+1 where id = #{id}
@@ -42,10 +42,13 @@
         select * from message where id = #{id};
     </select>
     <select id="count" resultType="long">
-        select count(id) from admin
+        select count(id) from message
         <where>
-            <if test="name !=null and name !=''">
-                and name like concat('%',#{name},'%')
+            <if test="content !=null and content !=''">
+                and content like concat('%',#{content},'%')
+            </if>
+            <if test="facilityid !=null and facilityid !=''">
+                and facilityid = #{facilityid}
             </if>
         </where>
     </select>

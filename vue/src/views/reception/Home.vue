@@ -201,6 +201,7 @@ import {ElMessage} from "element-plus";
 import Cookies from "js-cookie";
 const state = reactive({
   tableDate:[],
+  facilityDate:[],
   categories:[],
   form:{},
   date:{},
@@ -212,17 +213,17 @@ const state = reactive({
     "https://img2.baidu.com/it/u=1395980100,2999837177&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1674061200&t=8805a0cb4ac251db52c1b4cfbe42f1ed",
   ]
 })
-// const load = () => {
-//   request.get("/facility/page",{
-//
-//   }).then(res =>{
-//     if (res.code === '200'){
-//       console.log(res)
-//       state.tableDate = res.data.list
-//       total.value = res.data.total
-//     }
-//   })
-// }
+const loadFacilities = () => {
+  request.get("/facility/home",{
+
+  }).then(res =>{
+    if (res.code === '200'){
+      console.log(res)
+      state.facilityDate = res.data.list
+    }
+  })
+}
+loadFacilities()
 </script>
 
 <style scoped>

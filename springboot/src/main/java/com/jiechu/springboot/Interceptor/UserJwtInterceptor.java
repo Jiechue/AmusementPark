@@ -19,44 +19,44 @@ import javax.servlet.http.HttpServletResponse;
 @Component
 @Slf4j
 public class UserJwtInterceptor implements HandlerInterceptor {
-    private static final String ERROR_CODE_401 = "401";
+    private static final String ERROR_CODE_402 = "402";
 
     @Autowired
     private UserService userService;
 
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) {
-        String token = request.getHeader("token");
-        if (StrUtil.isBlank(token)) {
-            token = request.getParameter("token");
+        String userToken = request.getHeader("userToken");
+        if (StrUtil.isBlank(userToken)) {
+            userToken = request.getParameter("userToken");
         }
 
         // 执行认证
-        if (StrUtil.isBlank(token)) {
-            throw new ServiceException(ERROR_CODE_401, "无token，请重新登录");
+        if (StrUtil.isBlank(userToken)) {
+            throw new ServiceException(ERROR_CODE_402, "无userToken，请重新登录");
         }
         // 获取 token 中的adminId
         String userId;
         User user;
         try {
-            userId = JWT.decode(token).getAudience().get(0);
+            userId = JWT.decode(userToken).getAudience().get(0);
             // 根据token中的userid查询数据库
             user = userService.showUserById(Integer.parseInt(userId));
         } catch (Exception e) {
-            String errMsg = "token验证失败，请重新登录";
-            log.error(errMsg + ", token=" + token, e);
-            throw new ServiceException(ERROR_CODE_401, errMsg);
+            String errMsg = "userToken验证失败，请重新登录";
+            log.error(errMsg + ", token=" + userToken, e);
+            throw new ServiceException(ERROR_CODE_402, errMsg);
         }
         if (user == null) {
-            throw new ServiceException(ERROR_CODE_401, "用户不存在，请重新登录");
+            throw new ServiceException(ERROR_CODE_402, "用户不存在，请重新登录");
         }
 
         try {
             // 用户密码加签验证 token
             JWTVerifier jwtVerifier = JWT.require(Algorithm.HMAC256(user.getPassword())).build();
-            jwtVerifier.verify(token); // 验证token
+            jwtVerifier.verify(userToken); // 验证token
         } catch (JWTVerificationException e) {
-            throw new ServiceException(ERROR_CODE_401, "token验证失败，请重新登录");
+            throw new ServiceException(ERROR_CODE_402, "userToken验证失败，请重新登录");
         }
         return true;
     }

@@ -1,10 +1,12 @@
 package com.jiechu.springboot.controller;
 
 import com.jiechu.springboot.common.Result;
+import com.jiechu.springboot.controller.DTO.FacilityResultByUserDTO;
 import com.jiechu.springboot.controller.DTO.MessageResultByUserDTO;
 import com.jiechu.springboot.entity.Facility;
 import com.jiechu.springboot.entity.Like;
 import com.jiechu.springboot.entity.User;
+import com.jiechu.springboot.service.FacilityService;
 import com.jiechu.springboot.service.LikeService;
 import com.jiechu.springboot.service.MessageService;
 import com.jiechu.springboot.utils.UserTokenUtils;
@@ -18,9 +20,12 @@ import org.springframework.web.bind.annotation.*;
 public class ActionController {
     @Autowired
     LikeService likeService;
+    @Autowired
     MessageService messageService;
+    @Autowired
+    FacilityService facilityService;
     @PostMapping("/like")
-    public Result like(MessageResultByUserDTO messageResultByUserDTO){
+    public Result like(@RequestBody MessageResultByUserDTO messageResultByUserDTO){
         Like like = new Like();
         User user = UserTokenUtils.getCurrentUser();
         Integer id = messageResultByUserDTO.getId();
@@ -47,7 +52,7 @@ public class ActionController {
         return Result.error("点赞失败");
     }
     @PostMapping("/hate")
-    public Result hate(MessageResultByUserDTO messageResultByUserDTO){
+    public Result hate(@RequestBody MessageResultByUserDTO messageResultByUserDTO){
         Like like = new Like();
         User user = UserTokenUtils.getCurrentUser();
         Integer id = messageResultByUserDTO.getId();
@@ -74,8 +79,23 @@ public class ActionController {
         return Result.error("不喜欢失败");
     }
     @PostMapping("/likeFacility")
-    public Result likeFacility(Facility facility){
-        return null;
+    public Result likeFacility(@RequestBody FacilityResultByUserDTO facilityResultByUserDTO){
+
+        Like like = new Like();
+        User user = UserTokenUtils.getCurrentUser();
+        Integer id = facilityResultByUserDTO.getId();
+        like.setTargetid(id);
+        like.setUserid(user.getId());
+
+        if (facilityResultByUserDTO.isLike()){
+            facilityService.reduceLikeTotal(id);
+            likeService.deleteFacility(like);
+            return Result.success("取消点赞成功");
+        }else {
+            facilityService.addLikeTotal(id);
+            likeService.addFacility(like);
+            return Result.success("点赞成功");
+        }
     }
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Integer id){

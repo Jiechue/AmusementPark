@@ -17,6 +17,7 @@ public interface FacilityDao {
     long count(FacilityQueryDTO facilityQueryDTO);
     Facility selectById(@Param("id") Integer id);
     List<Facility> selectReception(Facility facility);
-    int updateAddTotalLike(Facility facility);
-    int updateReduceTotalLike(Facility facility);
+    int updateAddTotalLike(@Param("id")Integer id);
+    int updateReduceTotalLike(@Param("id")Integer id);
+    List<Facility> selectReceptionHome();
 }

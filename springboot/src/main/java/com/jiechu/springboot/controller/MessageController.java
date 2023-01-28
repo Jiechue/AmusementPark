@@ -10,6 +10,7 @@ import com.jiechu.springboot.service.MessageService;
 import com.jiechu.springboot.service.UserService;
 import com.jiechu.springboot.utils.UserTokenUtils;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,7 +25,9 @@ import java.util.Map;
 public class MessageController {
     @Autowired
     MessageService messageService;
+    @Autowired
     LikeService likeService;
+    @Autowired
     UserService userService;
     @PostMapping
     public Result add(@RequestBody Message message){
@@ -95,6 +98,7 @@ public class MessageController {
         messageQueryDTO.setFacilityid(id);
 
         List<Message> messages = messageService.showPageMessages(messageQueryDTO);
+
         long total = messageService.count(messageQueryDTO);
         User user = null;
         if (UserTokenUtils.getCurrentUser() !=null){
@@ -102,6 +106,7 @@ public class MessageController {
         }
         List<MessageResultByUserDTO> messageResultByUserDTOList = new ArrayList<>();
         for (Message message : messages){
+            System.out.println(message.toString());
             MessageResultByUserDTO messageResultByUserDTO = new MessageResultByUserDTO();
             Like like = null;
             if (user != null){
@@ -119,17 +124,24 @@ public class MessageController {
                     messageResultByUserDTO.setDislike(true);
                 }
             }
+
             User u = userService.showUserById(message.getUserid());
             User messageUser = new User();
             messageUser.setAvatar(u.getAvatar());
             messageUser.setUsername(u.getUsername());
             messageResultByUserDTO.setUser(messageUser);
-            messageResultByUserDTO.setId(message.getId());
-            messageResultByUserDTO.setLiketotal(message.getLiketotal());
-            messageResultByUserDTO.setContent(message.getContent());
-            messageResultByUserDTO.setCreatetime(message.getCreatetime());
-            messageResultByUserDTO.setDisliketotal(message.getDisliketotal());
-            messageResultByUserDTO.setFacilityid(message.getFacilityid());
+//            messageResultByUserDTO.setId(message.getId());
+//            messageResultByUserDTO.setLiketotal(message.getLiketotal());
+//            messageResultByUserDTO.setContent(message.getContent());
+//            messageResultByUserDTO.setCreatetime(message.getCreatetime());
+//            messageResultByUserDTO.setDisliketotal(message.getDisliketotal());
+//            messageResultByUserDTO.setFacilityid(message.getFacilityid());
+
+            BeanUtils.copyProperties(message,messageResultByUserDTO);
+
+            messageUser.setAvatar(u.getAvatar());
+            messageUser.setUsername(u.getUsername());
+            messageResultByUserDTO.setUser(messageUser);
 
             messageResultByUserDTOList.add(messageResultByUserDTO);
         }

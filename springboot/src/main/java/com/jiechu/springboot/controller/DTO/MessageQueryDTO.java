@@ -7,6 +7,7 @@ public class MessageQueryDTO {
     private Integer currentPage;
     private Integer pageNum;
     private Integer pageSize;
-    private String name;
+    private String content;
     private Integer facilityid;
+    private Integer userid;
 }

@@ -12,4 +12,5 @@ public interface LikeDao {
     Like selectByUserIdAndMessageId(@Param("userid")Integer userid,@Param("messageid")Integer messageid);
     int insertFacility(Like like);
     int deleteFacility(Like like);
+    Like selectFacilityByUserIdAndMessageId(@Param("userid")Integer userid,@Param("facilityid")Integer facilityid);
 }
