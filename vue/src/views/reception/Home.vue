@@ -135,7 +135,8 @@
               <div class="text-btn">
                 <a class="text-btn-a">在线购票</a>
               </div>
-              <img style="width: 100%;top: 2px" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
+              <img style="width: 100%;top: 30px;position: relative;" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
+              <div class="cont-bottom"></div>
             </div>
           </div>
           <div title="开放时间" class="item">
@@ -162,10 +163,8 @@
                   </div>
                 </div>
               </div>
-              <div class="text-btn">
-                <a class="text-btn-a"></a>
-              </div>
-              <img style="width: 100%;top: 2px" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
+              <img style="width: 100%;top: 50px;position: relative;" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
+              <div class="cont-bottom" style="top: 46px"></div>
             </div>
           </div>
           <div title="乐园地图" class="item">
@@ -173,7 +172,7 @@
             <div class="cont">
               <div class="cont-content">
                 <el-image
-                    style="width: 100px; height: 100px"
+                    style="width: 250px; height: 300px"
                     src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"
                     :zoom-rate="1.2"
                     :preview-src-list="state.test"
@@ -184,7 +183,8 @@
               <div class="text-btn">
                 <a class="text-btn-a">在线购票</a>
               </div>
-              <img style="width: 100%;top: 2px" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
+              <img style="width: 100%;top: 30px;position: relative;" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
+              <div class="cont-bottom"></div>
             </div>
           </div>
         </div>
@@ -285,7 +285,7 @@ const state = reactive({
 }
 .cont{
   width: 100%;
-  height: 100%;
+  height: 600px;
   position: relative;
   border-radius: 20px;
   box-shadow: 2px 2px 3px 0 rgb(0 0 0 / 10%);
@@ -398,5 +398,12 @@ a{
 }
 .list-li-text{
   margin: 10px;
+}
+.cont-bottom{
+  top: 26px;
+  position: relative;
+  width: 100%;
+  padding-bottom: 50px;
+  background-color: #fff;
 }
 </style>
