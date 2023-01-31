@@ -1,7 +1,7 @@
 <template>
-  <div style="margin: auto;min-width: 1024px;height: 300px">
+  <div style="margin: auto;min-width: 1024px;">
     <div class="block text-center">
-      <el-carousel height="300px">
+      <el-carousel height="500px">
         <el-carousel-item v-for="item in state.test" :key="item">
 <!--          <h3 class="small justify-center" text="2xl"><img src="{{state.test.url}}"></h3>-->
           <img :src="item" style="width: 100%;height: 100%">

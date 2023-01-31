@@ -91,6 +91,16 @@ const handleCurrentChange = (val) => {
   currentPage.value = val
   load()
 }
+const deleteRow = (id) => {
+  request.delete("/message/" + id).then(res => {
+    if (res.code === '200' && res.data){
+      ElMessage.success("删除成功")
+    }else {
+      ElMessage.success("删除失败")
+    }
+    load()
+  })
+}
 </script>
 
 <style scoped>

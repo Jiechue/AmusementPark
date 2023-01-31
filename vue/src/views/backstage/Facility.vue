@@ -233,29 +233,30 @@ const handleAvatarSuccess = (res) => {
 
 const Save = () => {
   proxy.$refs.ruleFormRef.validate((valid)=>{
-    console.log(state.form)
-    if (state.form.id){//如果id存在则为编辑
-      request.put("/facility",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          ElMessage.error(res.msg)
-        }
-      })
-    }else {
-      console.log(state.form)
-      request.post("/facility",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          console.log(res)
-          ElMessage.error(res.msg)
-        }
-      })
+    if (valid){
+      if (state.form.id){//如果id存在则为编辑
+        request.put("/facility",state.form).then(res => {
+          if (res.code === '200'){
+            ElMessage.success("保存成功")
+            dialogFormVisible.value = false;
+            load()
+          }else {
+            ElMessage.error(res.msg)
+          }
+        })
+      }else {
+        console.log(state.form)
+        request.post("/facility",state.form).then(res => {
+          if (res.code === '200'){
+            ElMessage.success("保存成功")
+            dialogFormVisible.value = false;
+            load()
+          }else {
+            console.log(res)
+            ElMessage.error(res.msg)
+          }
+        })
+      }
     }
   })
 }

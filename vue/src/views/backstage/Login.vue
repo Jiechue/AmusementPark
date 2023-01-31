@@ -49,7 +49,6 @@ const rules = reactive({
 })
 const Login = () =>{
   proxy.$refs.ruleFormRef.validate((valid)=>{
-
     if (valid){
       //Promise
       //往后台发请求 http://localhost:9090 /user/login
