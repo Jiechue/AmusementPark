@@ -56,7 +56,7 @@
   </div>
 
   <el-dialog v-model="dialogLoginFormVisible" title="登陆">
-    <el-form :model="state.form" :rules="state.rules" ref="ruleFormRef" label-width="120px" style="width: 85%">
+    <el-form :model="state.form" :rules="state.rules" ref="ruleLoginFormRef" label-width="120px" style="width: 85%">
       <el-form-item label="用户名" prop="name" label-width="formLabelWidth">
         <el-input v-model="user.username" autocomplete="off" placeholder="请输入用户名"/>
       </el-form-item>
@@ -73,7 +73,7 @@
   </el-dialog>
 
   <el-dialog v-model="dialogFormPasswordVisible" title="修改密码">
-    <el-form :model="state.form" :rules="state.rules" ref="ruleFormRef" label-width="120px" style="width: 85%">
+    <el-form :model="state.form" :rules="state.rules" ref="rulePasswordFormRef" label-width="120px" style="width: 85%">
       <el-form-item label="旧密码" prop="oldPassowrd" label-width="formLabelWidth">
         <el-input v-model="state.form.oldPassword" autocomplete="off" placeholder="请输入旧密码"/>
       </el-form-item>
@@ -174,6 +174,14 @@ const state = reactive({
       {required: true, message:'请输入密码', trigger: 'blur'},
       {min: 5 , max: 16 , message: '最少输入五位最多输入十六位', trigger: 'blur'}
     ],
+    oldPassword: [
+      {required: true, message:'请输入密码', trigger: 'blur'},
+      {min: 5 , max: 16 , message: '最少输入五位最多输入十六位', trigger: 'blur'}
+    ],
+    newPassword: [
+      {required: true, message:'请输入密码', trigger: 'blur'},
+      {min: 5 , max: 16 , message: '最少输入五位最多输入十六位', trigger: 'blur'}
+    ],
   }
 })
 console.log(state.user)
@@ -185,8 +193,7 @@ const showUpdatePassword = (row) =>{
   state.form.id = row
 }
 const Login = () =>{
-  proxy.$refs.ruleFormRef.validate((valid)=>{
-
+  proxy.$refs.ruleLoginFormRef.validate((valid)=>{
     if (valid){
       //Promise
       //往后台发请求 http://localhost:9090 /user/login
@@ -218,27 +225,18 @@ const Login = () =>{
   })
 }
 const SavePassword = () => {
-  proxy.$refs.ruleFormRef.validate((valid)=>{
-    if (state.form.id){//如果id存在则为编辑
-      request.put("/user/updatePassword",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-        }else {
-          ElMessage.error(res.msg)
-        }
-      })
-    }else {
-      console.log(state.form)
-      request.post("/admin",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormPasswordVisible.value = false;
-        }else {
-          console.log(res)
-          ElMessage.error(res.msg)
-        }
-      })
+  proxy.$refs.rulePasswordFormRef.validate((valid)=>{
+    if (valid){
+      if (state.form.id){//如果id存在则为编辑
+        request.put("/user/updatePassword",state.form).then(res => {
+          if (res.code === '200'){
+            ElMessage.success("保存成功")
+            dialogFormVisible.value = false;
+          }else {
+            ElMessage.error(res.msg)
+          }
+        })
+      }
     }
   })
 }
@@ -261,28 +259,30 @@ const handleEdit = (row) => {
 
 const Save = () => {
   proxy.$refs.ruleFormRef.validate((valid)=>{
-    if (state.form.id){//如果id存在则为编辑
-      request.put("/user",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          ElMessage.error(res.msg)
-        }
-      })
-    }else {
-      console.log(state.form)
-      request.post("/user",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          console.log(res)
-          ElMessage.error(res.msg)
-        }
-      })
+    if (valid){
+      if (state.form.id){//如果id存在则为编辑
+        request.put("/user/userUpdate",state.form).then(res => {
+          if (res.code === '200'){
+            ElMessage.success("保存成功")
+            dialogFormVisible.value = false;
+            load()
+          }else {
+            ElMessage.error(res.msg)
+          }
+        })
+      }else {
+        console.log(state.form)
+        request.post("/user/userAdd",state.form).then(res => {
+          if (res.code === '200'){
+            ElMessage.success("保存成功")
+            dialogFormVisible.value = false;
+            load()
+          }else {
+            console.log(res)
+            ElMessage.error(res.msg)
+          }
+        })
+      }
     }
   })
 }

@@ -122,8 +122,8 @@ public class UserController {
 //        return Result.success(new PageInfo<>(users));
 
     }
-    @PostMapping
-    public Result register(@RequestBody User user){
+    @PostMapping("/adminAdd")
+    public Result adminRegister(@RequestBody User user){
         if (user.getUsername() == null||user.getPassword()==null){
             return Result.error("参数错误");
         }
@@ -133,8 +133,26 @@ public class UserController {
             throw new ServiceException("用户名已注册");
         }
     }
-    @PutMapping
-    public Result update(@RequestBody User user){
+    @PostMapping("/userAdd")
+    public Result userRegister(@RequestBody User user){
+        if (user.getUsername() == null||user.getPassword()==null){
+            return Result.error("参数错误");
+        }
+        try{
+            return Result.success(userService.registerUser(user));
+        }catch (DuplicateKeyException e){
+            throw new ServiceException("用户名已注册");
+        }
+    }
+    @PutMapping("/adminUpdate")
+    public Result adminUpdate(@RequestBody User user){
+        if (user.getUsername() == null||user.getPassword()==null){
+            return Result.error("参数错误");
+        }
+        return Result.success(userService.updateUser(user));
+    }
+    @PutMapping("/userUpdate")
+    public Result userUpdate(@RequestBody User user){
         if (user.getUsername() == null||user.getPassword()==null){
             return Result.error("参数错误");
         }

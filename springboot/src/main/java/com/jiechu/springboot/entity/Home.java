@@ -8,5 +8,5 @@ public class Home {
     private String title;
     private String description;
     private String opentime;
-    private String[] pictures;
+    private List<String> pictures;
 }
