@@ -8,6 +8,7 @@ import com.jiechu.springboot.service.FacilityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Service
@@ -37,6 +38,7 @@ public class FacilityServiceImpl implements FacilityService {
 
     @Override
     public boolean updateFacility(Facility facility) {
+        facility.setUpdatetime(LocalDate.now());
         if (facilityDao.update(categoriesToCategory(facility))>0){
             return true;
         }

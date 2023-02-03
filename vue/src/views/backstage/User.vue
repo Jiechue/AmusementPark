@@ -9,7 +9,6 @@
   <el-table :data="state.tableDate" stripe style="width: 100%;">
     <el-table-column prop="id" label="ID" width="180"/>
     <el-table-column prop="username" label="用户名"/>
-    <el-table-column prop="password" label="密码"/>
     <el-table-column prop="realName" label="真实姓名"/>
     <el-table-column prop="sex" label="性别"/>
     <el-table-column prop="age" label="年龄"/>
@@ -98,6 +97,51 @@
       </span>
     </template>
   </el-dialog>
+  <el-dialog v-model="dialogUpdateFormVisible" title="用户信息">
+    <el-form :model="state.form" :rules="state.rules" ref="ruleFormRef" label-width="120px" style="width: 85%">
+      <el-form-item label="用户名" prop="username" label-width="formLabelWidth">
+        <el-input v-model="state.form.username" autocomplete="off" placeholder="请输入用户名"/>
+      </el-form-item>
+      <el-form-item label="真实姓名" prop="realName" label-width="formLabelWidth">
+        <el-input v-model="state.form.realName" autocomplete="off" placeholder="请输入真实姓名"/>
+      </el-form-item>
+      <el-form-item label="性别" prop="sex" label-width="formLabelWidth">
+        <el-radio-group v-model="state.form.sex" class="ml-4">
+          <el-radio label="男">男</el-radio>
+          <el-radio label="女">女</el-radio>
+        </el-radio-group>
+      </el-form-item>
+      <el-form-item label="年龄" prop="age" label-width="formLabelWidth">
+        <el-input v-model="state.form.age" autocomplete="off" placeholder="请输入年龄"/>
+      </el-form-item>
+      <el-form-item label="电话号码" prop="phone" label-width="formLabelWidth">
+        <el-input v-model="state.form.phone" autocomplete="off" placeholder="请输入电话号码"/>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email" label-width="formLabelWidth">
+        <el-input v-model="state.form.email" autocomplete="off" placeholder="请输入邮箱"/>
+      </el-form-item>
+      <el-form-item label="地址" prop="address" label-width="formLabelWidth">
+        <el-input type="textarea" v-model="state.form.address" autocomplete="off" placeholder="请输入地址"/>
+      </el-form-item>
+      <el-form-item label="头像" prop="avatar" label-width="formLabelWidth">
+        <el-upload
+            class="avatar-uploader"
+            :action="'http://localhost:9090/api/user/file/upload?token=' + state.admin.token"
+            :show-file-list="false"
+            :on-success="handleAvatarSuccess"
+        >
+          <img v-if="state.form.avatar" :src="state.form.avatar" class="avatar" />
+          <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
+        </el-upload>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button type="primary" @click="Save">保存</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -109,6 +153,7 @@ import Cookies from "js-cookie";
 const { proxy } = getCurrentInstance()
 
 const dialogFormVisible = ref(false)
+const dialogUpdateFormVisible = ref(false)
 
 const checkEmail = (rule, value, callback) => {
   if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value)){
@@ -173,7 +218,7 @@ const handleAdd = () => {
 }
 
 const handleEdit = (row) => {
-  dialogFormVisible.value= true
+  dialogUpdateFormVisible.value= true
   state.form = JSON.parse(JSON.stringify(row))
 }
 const handleAvatarSuccess = (res) => {

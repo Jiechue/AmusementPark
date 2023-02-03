@@ -29,7 +29,7 @@
                       <div style="font-size: 10px">适合年龄：{{item.age}}</div>
                     </div>
                   </div>
-                  <div>好评数：{{item.totallike}}</div>
+                  <div>好评数：{{item.liketotal}}</div>
                 </div>
                 <div class="list-li-icon"></div>
               </div>

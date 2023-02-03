@@ -29,7 +29,7 @@ public class MessageController {
     LikeService likeService;
     @Autowired
     UserService userService;
-    @PostMapping
+    @PostMapping("/release")
     public Result add(@RequestBody Message message){
 //        if (message.getName() == null){
 //            return Result.error("参数错误");
@@ -127,8 +127,11 @@ public class MessageController {
 
             User u = userService.showUserById(message.getUserid());
             User messageUser = new User();
-            messageUser.setAvatar(u.getAvatar());
-            messageUser.setUsername(u.getUsername());
+            if (u != null){
+                messageUser.setAvatar(u.getAvatar());
+                messageUser.setUsername(u.getUsername());
+                messageUser.setId(u.getId());
+            }
             messageResultByUserDTO.setUser(messageUser);
 //            messageResultByUserDTO.setId(message.getId());
 //            messageResultByUserDTO.setLiketotal(message.getLiketotal());
@@ -139,8 +142,6 @@ public class MessageController {
 
             BeanUtils.copyProperties(message,messageResultByUserDTO);
 
-            messageUser.setAvatar(u.getAvatar());
-            messageUser.setUsername(u.getUsername());
             messageResultByUserDTO.setUser(messageUser);
 
             messageResultByUserDTOList.add(messageResultByUserDTO);

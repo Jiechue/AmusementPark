@@ -1,8 +1,8 @@
 <template>
   <div style="margin: auto;min-width: 1024px;">
     <div class="block text-center">
-      <el-carousel height="500px">
-        <el-carousel-item v-for="item in state.test" :key="item">
+      <el-carousel height="500px" style="width: 1424px;margin-left: auto;margin-right: auto">
+        <el-carousel-item v-for="item in state.url" :key="item">
 <!--          <h3 class="small justify-center" text="2xl"><img src="{{state.test.url}}"></h3>-->
           <img :src="item" style="width: 100%;height: 100%">
         </el-carousel-item>
@@ -11,69 +11,44 @@
     <div style="width: 1024px;margin-left: auto;margin-right: auto;position: relative;">
       <div style="background-color: white;border-radius: 20px;padding-left: 20px;padding-right: 20px;box-shadow: 2px 2px 3px 2px rgb(0 0 0 / 10%);">
         <div style="margin-left: 20px;margin-right: 20px;margin-top: 10px">
-          <h1>迪士隆欢乐世界</h1>
+          <h1>{{ state.form.title }}</h1>
+          <div><hr></div>
           <div style="display: flex;justify-content: space-between">
-            <div style="width: 60%;font-size: 18px">长隆欢乐世界位于广州长隆旅游度假区的中心位置，是具备国际先进游乐设施和管理水平的超大型主题游乐园。长隆欢乐世界引进有全球领先的游乐设施70余套，其中包括有“全球过山车之王”之称的垂直过山车、创吉尼斯世界纪录的十环过山车、荣获行业设计金奖的摩托过山车、东半球唯一的U型滑板、超级大摆锤、亚洲先进四维影院、原创时空探险项目《星际决战》、奇幻马戏主题欢乐小镇、万人超级演艺广场、欢乐世界大巡游，集世界精彩游乐设施与大型演艺于一体。长隆欢乐世界曾经创下单日接待游客超过10万人的主题公园记录，被誉为“中国新一代游乐园的典范之作”。！</div>
-            <div style="width: 28%;height: 120px;background-color: #ebf6fc;border-radius: 12px;padding: 20px">
-              <div>开放或演出时间</div>
-              <div>星期五</div>
-              <div>上午 8:30 至 晚上 9:30</div>
-            </div>
+            <div style="width: 60%;font-size: 18px">{{state.form.description}}</div>
+<!--            <div style="width: 28%;height: 120px;background-color: #ebf6fc;border-radius: 12px;padding: 20px">-->
+<!--              <div>开放或演出时间</div>-->
+<!--              <div>星期五</div>-->
+<!--              <div>上午 8:30 至 晚上 9:30</div>-->
+<!--            </div>-->
           </div>
-          <div style="font-size: 20px;margin-top: 20px">乐园体验</div>
+          <div style="font-size: 20px;margin-top: 20px">精选设施</div>
         </div>
         <div><hr></div>
         <ul>
-          <li class="list-li">
+          <li class="list-li" v-for="(item) in state.facilityDate">
             <div class="list-li-container">
-              <a href="http://localhost:8080">
+              <a @click="$router.push('/reception/facility/'+item.id)">
                 <div style="width: 90%;height: 250px;margin: auto">
-                  <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
-                </div>
-                <div style="margin: 10px;display: flex;justify-content: space-between;text-align: left">
-                  <div class="list-li-text">
-                    <div>迪士尼奇幻冬日巡游</div>
-                    <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
-                    <div>*效果请以实际运营情况为准</div>
-                  </div>
-                  <div class="list-li-icon"></div>
-                </div>
-              </a>
-            </div>
-          </li>
-          <li class="list-li">
-            <div class="list-li-container">
-              <a href="http://localhost:8080">
-                <div style="width: 90%;height: 250px;margin: auto">
-                  <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
+                  <img style="width: 100%;height: 100%" :src="item.cover">
                 </div>
                 <div style="margin: 10px;display: flex;justify-content: space-between">
-                  <div>
-                    <div>迪士尼奇幻冬日巡游</div>
-                    <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
-                    <div>*效果请以实际运营情况为准</div>
+                  <div class="list-li-text">
+                    <h3>{{ item.name }}</h3>
+                    <div style="display: flex;justify-content: space-between;width: 400px">
+                      <div>{{ item.description }}</div>
+                      <div style="margin-left: 20px;vertical-align: top;">
+                        <div style="font-weight: bold">开放时间</div>
+                        <div style="font-size: 10px">{{ item.opentime }}</div>
+                        <div style="font-size: 10px">游客身高：{{item.height}}</div>
+                        <div style="font-size: 10px">适合年龄：{{item.age}}</div>
+                      </div>
+                    </div>
+                    <div>好评数：{{item.liketotal}}</div>
                   </div>
                   <div class="list-li-icon"></div>
                 </div>
               </a>
             </div>
-          </li>
-          <li style="width: 48%;display: inline-block">
-            <div class="list-li-container">
-              <a href="http://localhost:8080">
-                <div style="width: 90%;height: 250px;margin: auto">
-                  <img width="100%" height="100%" src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
-                </div>
-                <div class="list-li-text">
-                  <div>迪士尼奇幻冬日巡游</div>
-                  <div>全新的迪士尼奇幻冬日巡游来啦！迪士尼朋友们将带你沉浸于经典冬日童话中！</div>
-                  <div>*效果请以实际运营情况为准</div>
-                </div>
-              </a>
-            </div>
-          </li>
-          <li style="width: 48%;display: inline-block">
-            <img src="https://secure.cdn2.wdpromedia.cn/resize/mwImage/2/434/244/90/wdpromedia.disney.go.com/media/wdpro-shdr-assets/prod/zh-cn-cn/system/images/shdr-ent-disney-winter-magic-cavalcade-hero-20221206.png">
           </li>
         </ul>
       </div>
@@ -147,11 +122,7 @@
                 <div class="time-list">
                   <div>
                     <div><h3>营业时间</h3></div>
-                    <div>常规营业时间：10:00-18:00</div>
-                    <div>2022年12月31日至2023年1月2日：10:00-21:00
-                      2023年1月22日至2023年1月28日：10:00-21:00
-                      （闭园前2小时停止售票，验票入园时间与营业时间同步；入园时间如有变动，请以园区
-                      公告为准。）</div>
+                    <div style="float: left" v-html="state.form.opentime"></div>
                   </div>
                   <br style="background: #cecece;height: 1px;width: 100%">
                   <div>
@@ -207,23 +178,46 @@ const state = reactive({
   date:{},
   url: [
       "https://img0.baidu.com/it/u=1705694933,4002952892&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1674061200&t=a5c4072f26119d5c590541d62bec8127"
-  ],
-  test:[
-    "https://img0.baidu.com/it/u=1705694933,4002952892&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1674061200&t=a5c4072f26119d5c590541d62bec8127",
-    "https://img2.baidu.com/it/u=1395980100,2999837177&fm=253&app=120&size=w931&n=0&f=JPEG&fmt=auto?sec=1674061200&t=8805a0cb4ac251db52c1b4cfbe42f1ed",
   ]
 })
+const load = () => {
+  request.get("/home/load",{
+
+  }).then(res =>{
+    if (res.code === '200'){
+      console.log(res)
+      state.form = res.data
+    }
+  })
+}
+const loadImages = () => {
+  request.get("/home/load-image",{
+
+  }).then(res =>{
+    if (res.code === '200'){
+      console.log(res)
+      state.url = res.data
+    }
+  })
+}
 const loadFacilities = () => {
   request.get("/facility/home",{
 
   }).then(res =>{
     if (res.code === '200'){
       console.log(res)
-      state.facilityDate = res.data.list
+      state.facilityDate = res.data
     }
   })
 }
+load()
+loadImages()
 loadFacilities()
+const test = () => {
+  console.log(state.form)
+  console.log()
+  console.log(state.facilityDate)
+}
 </script>
 
 <style scoped>
@@ -350,13 +344,17 @@ loadFacilities()
 
 .list-li-container{
   border-radius: 20px;
-  background-color: white;
+  /*background-color: gray;*/
   padding: 20px;
+  transition: all 0.3s;
 }
 .list-li-container a:hover img{
   transform:scale(105%,105%);
   overflow: hidden;
   transition: 0.3s;
+}
+.list-li-container a{
+  cursor: pointer;
 }
 .list-li-container a:hover .list-li-icon::before{
   border-color: transparent transparent transparent #1994d7;
@@ -384,7 +382,7 @@ a{
 .list-li-icon::before{
   content: '';
   position: absolute;
-  top: 0;
+  top: 40px;
   left: 0;
   border: 16px solid;
   border-color: transparent transparent transparent rgba(161,175,192,0.3);
@@ -392,13 +390,10 @@ a{
 .list-li-icon::after{
   content: '';
   position: absolute;
-  top: 6px;
+  top: 46px;
   left: -2px;
   border: 10px solid;
   border-color: transparent transparent transparent white;
-}
-.list-li-text{
-  margin: 10px;
 }
 .cont-bottom{
   top: 26px;

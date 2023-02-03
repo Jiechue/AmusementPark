@@ -83,12 +83,12 @@ const router = createRouter({
 })
 
 //路由首位
-// router.beforeEach((to,from,next) => {
-//     if (to.path === '/login') next()
-//     const admin = Cookies.get("admin")
-//     if (!admin && to.path !== '/login') return next("/login")
-//     next()
-// })
+router.beforeEach((to,from,next) => {
+    const admin = Cookies.get("admin")
+    if (!admin && to.path === '/backstage') return next("/login")
+    if (!admin && to.path === '/backstage/**') return next("/login")
+    next()
+})
 
 //输出对象
 export default router;

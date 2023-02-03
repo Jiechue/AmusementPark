@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jiechu.springboot.dao.HomeDao">
-
+    <insert id="insertImg">
+        insert into homeimage(url) values(#{url});
+    </insert>
     <update id="update">
-        update home set title=#{title},description=#{description},opentime=#{opentime}
+        update home set title=#{title},description=#{description},opentime=#{opentime} where id = 1;
     </update>
+    <select id="select" resultType="com.jiechu.springboot.entity.Home">
+        select * from home where id = 1;
+    </select>
+    <select id="selectImages" resultType="com.jiechu.springboot.entity.HomeImage">
+        select * from homeimage;
+    </select>
+    <delete id="deleteImg">
+        TRUNCATE TABLE homeimage;
+    </delete>
 </mapper>

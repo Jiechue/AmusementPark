@@ -29,7 +29,8 @@
           placeholder="营业时间"
       /></div>
     </div>
-    <div class="list upload">
+    <div class="list-upload">
+      <div class="title">首页图片</div>
       <el-upload
           v-model:file-list="fileList"
           :action="'http://localhost:9090/api/user/file/upload?token=' + admin.token"
@@ -60,39 +61,44 @@ const state = reactive({
   avatar:[]
 })
 const fileList = ref([])
-
+const fileFormList = ref([])
+const load = () => {
+  request.get("/home/load").then(res =>{
+    if (res.code === '200'){
+      console.log(res)
+      state.form = res.data
+    }
+  })
+}
+load()
 const Save = () => {
-  proxy.$refs.ruleFormRef.validate((valid)=>{
-    if (state.form.id){//如果id存在则为编辑
-      request.put("/user",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          ElMessage.error(res.msg)
-        }
+  console.log(fileFormList.value)
+  request.post("/home",fileFormList.value).then(res => {
+    if (res.code === '200'){
+      fileFormList.value = null
+      fileList.value.forEach(value => {
+        console.log(value)
+        value = null;
+        console.log(value)
       })
+      console.log(fileList.value)
     }else {
-      console.log(state.form)
-      request.post("/user",state.form).then(res => {
-        if (res.code === '200'){
-          ElMessage.success("保存成功")
-          dialogFormVisible.value = false;
-          load()
-        }else {
-          console.log(res)
-          ElMessage.error(res.msg)
-        }
-      })
+      console.log(res)
+      ElMessage.error(res.msg)
+    }
+  })
+  request.put("/home",state.form).then(res => {
+    if (res.code === '200'){
+      ElMessage.success("保存成功")
+      load()
+    }else {
+      console.log(res)
+      ElMessage.error(res.msg)
     }
   })
 }
 const handleAvatarSuccess = (res) => {
-  console.log(res.data)
-  if (res.code === '200'){
-    fileList.value.push(res.data)
-  }
+  fileFormList.value.push(fileList.value[fileList.value.length-1].response.data)
 }
 const handleRemove = (file,files)=>{
   console.log(file,files)
@@ -134,5 +140,9 @@ const handleRemove = (file,files)=>{
 .title{
   margin-bottom: 5px;
   font-size: 17px;
+}
+.list-upload{
+  margin-top: 40px;
+  margin-left: 20px;
 }
 </style>

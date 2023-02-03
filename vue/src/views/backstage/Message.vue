@@ -10,7 +10,6 @@
     <el-table-column prop="id" label="ID" width="180"/>
     <el-table-column prop="userid" label="用户ID"/>
     <el-table-column prop="facilityid" label="设施ID"/>
-    <el-table-column prop="pid" label="回复留言ID"/>
     <el-table-column prop="liketotal" label="总点赞数"/>
     <el-table-column prop="disliketotal" label="总不喜欢数"/>
     <el-table-column prop="createtime" label="创建时间"/>
@@ -68,7 +67,7 @@ const total = ref(0)
 const username = ref('')
 
 const load = () => {
-  request.get("/facility/page",{
+  request.get("/message/page",{
     params: {
       currentPage: currentPage.value,
       pageSize: pageSize.value,

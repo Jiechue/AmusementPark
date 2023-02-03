@@ -8,8 +8,12 @@
   <el-table :data="state.tableDate" stripe style="width: 100%;">
     <el-table-column prop="id" label="ID" width="180"/>
     <el-table-column prop="username" label="用户名"/>
-    <el-table-column prop="password" label="密码"/>
-    <el-table-column prop="power" label="权限"/>
+    <el-table-column prop="power" label="权限">
+      <template #default="scope">
+        <span v-if="scope.row.power === 0">超级管理员</span>
+        <span v-if="scope.row.power === 1">管理员</span>
+      </template>
+    </el-table-column>
     <el-table-column width="200px" label="操作">
       <template #default="scope">
         <el-button link type="primary" size="small" @click="handleEdit(scope.row)"><el-icon><EditPen/></el-icon>编辑</el-button>

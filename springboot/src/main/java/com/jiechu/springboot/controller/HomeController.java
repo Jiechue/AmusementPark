@@ -6,6 +6,7 @@ import com.jiechu.springboot.common.Result;
 import com.jiechu.springboot.entity.Admin;
 import com.jiechu.springboot.entity.Facility;
 import com.jiechu.springboot.entity.Home;
+import com.jiechu.springboot.entity.HomeImage;
 import com.jiechu.springboot.service.HomeService;
 import com.jiechu.springboot.service.LikeService;
 import com.jiechu.springboot.utils.AdminTokenUtils;
@@ -17,6 +18,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpServletResponse;
 import java.io.OutputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
@@ -75,5 +77,22 @@ public class HomeController {
     @PutMapping
     public Result update(@RequestBody Home home){
         return Result.success(homeService.update(home));
+    }
+    @GetMapping("/load")
+    public Result select(){
+        return Result.success(homeService.load());
+    }
+    @GetMapping("/load-image")
+    public Result selectImage(){
+        List<String> images = new ArrayList<>();
+        for (HomeImage image:homeService.loadImages()){
+            images.add(image.getUrl());
+        }
+        return Result.success(images);
+    }
+    @PostMapping
+    public Result addImg(@RequestBody List<String> urls){
+        homeService.deleteImg();
+        return Result.success(homeService.addImg(urls));
     }
 }

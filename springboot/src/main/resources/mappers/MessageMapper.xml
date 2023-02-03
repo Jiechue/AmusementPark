@@ -18,7 +18,7 @@
         update message set disliketotal = disliketotal-1 where id = #{id}
     </update>
     <delete id="delete">
-        delete from message where id = #{id};
+        delete from message where id = #{id} ;
     </delete>
     <select id="selectAll" resultType="com.jiechu.springboot.entity.Message">
         select * from message;

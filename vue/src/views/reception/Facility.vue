@@ -8,8 +8,16 @@
         <div class="facility-content">
           <div class="facility-text">{{ state.facilityDate.description }}</div>
           <div style="margin-top: 10px">
-            <div style="font-weight: bold">开放时间</div>
-            <div>{{ state.facilityDate.opentime }}</div>
+            <div style="font-weight: bold;display: inline-block">开放时间:</div>
+            <div style="display: inline-block;margin-left: 10px">{{ state.facilityDate.opentime }}</div>
+          </div>
+          <div style="margin-top: 10px">
+            <div style="font-weight: bold;display: inline-block">身高要求:</div>
+            <div style="display: inline-block;margin-left: 10px">{{ state.facilityDate.height }}</div>
+          </div>
+          <div style="margin-top: 10px">
+            <div style="font-weight: bold;display: inline-block">适合年龄:</div>
+            <div style="display: inline-block;margin-left: 10px">{{ state.facilityDate.age }}</div>
           </div>
           <div class="facility-up" @click="likeFacility(state.facilityDate)">
             <svg width="36" height="36" viewBox="0 0 36 36" xmlns="http://www.w3.org/2000/svg" class="icon">
@@ -74,13 +82,16 @@
               </i>
               <span></span>
             </span>
-            <div>
-              <el-popconfirm title="确定删除该评论吗？">
-                <template #reference>
-                  <el-button type="info" text>删除</el-button>
-                </template>
-              </el-popconfirm>
-            </div>
+            <template v-if="state.user.token">
+              <div v-if="item.user.id === state.user.id">
+                <el-popconfirm title="确定删除该评论吗？">
+                  <template #reference>
+                    <el-button type="info" text>删除</el-button>
+                  </template>
+                </el-popconfirm>
+              </div>
+              {{item.userid}}
+            </template>
           </div>
         </div>
         <div class="message-line"></div>
@@ -182,7 +193,7 @@ const handleCurrentChange = (val) => {
 const commit = () => {
   state.messageForm.userid = state.user.id
   state.messageForm.facilityid = state.facilityId
-  request.post("/message",state.messageForm).then(res =>{
+  request.post("/message/release",state.messageForm).then(res =>{
     if (res.code === '200'){
       console.log(res)
       ElMessage.success("发布成功")

@@ -31,6 +31,7 @@ public class WebConfig implements  WebMvcConfigurer {
                 .addPathPatterns("/api/user/adminAdd")
                 .addPathPatterns("/api/facilityCategory/**").excludePathPatterns("/api/facilityCategory/tree");
         registry.addInterceptor(userJwtInterceptor).addPathPatterns("/api/action/**")
-                .addPathPatterns("/api//user/userUpdate");
+                .addPathPatterns("/api/user/userUpdate")
+                .addPathPatterns("/api/message/release");
     }
 }
