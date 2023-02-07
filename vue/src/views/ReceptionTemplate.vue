@@ -1,5 +1,6 @@
 <script setup>
 import Header from '../components/ReceptionHeader.vue'
+import Footer from '../components/ReceptionFooter.vue'
 
 </script>
 <template>
@@ -8,6 +9,9 @@ import Header from '../components/ReceptionHeader.vue'
   </div>
   <div>
     <router-view />
+  </div>
+  <div>
+    <Footer/>
   </div>
 </template>
 
