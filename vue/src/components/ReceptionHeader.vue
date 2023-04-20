@@ -295,8 +295,8 @@ const Save = () => {
         console.log(state.form)
         request.post("/user/userAdd",state.form).then(res => {
           if (res.code === '200'){
-            ElMessage.success("保存成功")
-            dialogFormVisible.value = false;
+            ElMessage.success("注册成功")
+            dialogFormRegister.value = false;
             load()
           }else {
             console.log(res)

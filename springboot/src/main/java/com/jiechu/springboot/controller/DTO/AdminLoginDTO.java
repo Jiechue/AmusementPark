@@ -6,5 +6,6 @@ import lombok.Data;
 public class AdminLoginDTO {
     private Integer id;
     private String username;
+    private boolean power;
     private String token;
 }

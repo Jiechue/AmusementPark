@@ -28,6 +28,10 @@ public class AdminServiceImpl implements AdminService {
         AdminLoginDTO loginDTO = new AdminLoginDTO();
         BeanUtils.copyProperties(admin,loginDTO);
         System.out.println(loginDTO);
+        loginDTO.setPower(false);
+        if (admin.getPower() == 0){
+            loginDTO.setPower(true);
+        }
         //生成token
         String token = AdminTokenUtils.getToken(String.valueOf(admin.getId()),admin.getPassword());
         loginDTO.setToken(token);

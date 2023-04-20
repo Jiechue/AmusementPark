@@ -87,7 +87,7 @@
             </span>
             <template v-if="state.user.token">
               <div v-if="item.user.id === state.user.id">
-                <el-popconfirm title="确定删除该评论吗？">
+                <el-popconfirm title="确定删除该评论吗？" @confirm="deleteMessage(item.id)" confirm-button-text="确定" cancel-button-text="取消">
                   <template #reference>
                     <el-button type="info" text>删除</el-button>
                   </template>
@@ -202,6 +202,17 @@ const commit = () => {
       ElMessage.success("发布成功")
       loadMessage()
     }
+  })
+}
+
+const deleteMessage = (id) => {
+  request.delete("/message/" + id).then(res => {
+    if (res.code === '200' && res.data){
+      ElMessage.success("删除成功")
+    }else {
+      ElMessage.success("删除失败")
+    }
+    loadMessage()
   })
 }
 </script>
