@@ -117,9 +117,11 @@ public class FacilityController {
             like = likeService.showFacilityByUserIdAndMessageId(user.getId(),facility.getId());
             if (like != null){
                 facilityResultByUserDTO.setLike(true);
+                System.out.println(facilityResultByUserDTO.toString());
                 return Result.success(facilityResultByUserDTO);
             }
         }
+        System.out.println(facilityResultByUserDTO.toString());
         return Result.success(facilityResultByUserDTO);
     }
     @GetMapping

@@ -134,6 +134,26 @@
       </span>
     </template>
   </el-dialog>
+
+  <el-dialog v-model="dialogFormRegister" title="注册">
+    <el-form :model="state.form" :rules="state.rules" ref="ruleFormRef" label-width="120px" style="width: 85%">
+      <el-form-item label="用户名" prop="username" label-width="formLabelWidth">
+        <el-input v-model="state.form.username" autocomplete="off" placeholder="请输入用户名"/>
+      </el-form-item>
+      <el-form-item label="密码" prop="password" label-width="formLabelWidth">
+        <el-input v-model="state.form.password" autocomplete="off" placeholder="请输入密码"/>
+      </el-form-item>
+      <el-form-item label="邮箱" prop="email" label-width="formLabelWidth">
+        <el-input v-model="state.form.email" autocomplete="off" placeholder="请输入邮箱"/>
+      </el-form-item>
+    </el-form>
+    <template #footer>
+      <span class="dialog-footer">
+        <el-button @click="dialogFormRegister = false">取消</el-button>
+        <el-button type="primary" @click="Save">注册</el-button>
+      </span>
+    </template>
+  </el-dialog>
 </template>
 
 <script setup>
@@ -150,6 +170,7 @@ const { proxy } = getCurrentInstance()
 const dialogFormVisible = ref(false)
 const dialogFormPasswordVisible = ref(false)
 const dialogLoginFormVisible = ref(false)
+const dialogFormRegister = ref(false)
 
 const checkEmail = (rule, value, callback) => {
   if (!/^\w+([-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/.test(value)){
@@ -168,7 +189,7 @@ const state = reactive({
       {required: true, message: '请输入用户名', trigger: 'blur'}
     ],
     email: [
-      {validator: checkEmail,target: 'blur'}
+      {required: true, validator: checkEmail,target: 'blur'}
     ],
     password: [
       {required: true, message:'请输入密码', trigger: 'blur'},
@@ -248,7 +269,7 @@ const Logout = () =>{
 }
 
 const handleAdd = () => {
-  dialogFormVisible.value= true
+  dialogFormRegister.value= true
   state.form = {}
 }
 
