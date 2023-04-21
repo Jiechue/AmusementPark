@@ -38,7 +38,7 @@
         background
         v-model:currentPage="currentPage"
         v-model:page-size="pageSize"
-        :page-sizes="[100, 200, 300, 400]"
+        :page-sizes="[2,100 ,200, 300, 400]"
         :small="small"
         :disabled="disabled"
         :background="background"
@@ -137,7 +137,7 @@
     </el-form>
     <template #footer>
       <span class="dialog-footer">
-        <el-button @click="dialogFormVisible = false">取消</el-button>
+        <el-button @click="dialogUpdateFormVisible = false">取消</el-button>
         <el-button type="primary" @click="Save">保存</el-button>
       </span>
     </template>
@@ -265,7 +265,7 @@ const Save = () => {
         request.post("/user/adminAdd",state.form).then(res => {
           if (res.code === '200'){
             ElMessage.success("保存成功")
-            dialogFormVisible.value = false;
+            dialogUpdateFormVisible.value = false;
             load()
           }else {
             console.log(res)

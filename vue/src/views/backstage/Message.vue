@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-input style="width: 260px; margin-left: 10px" v-model="name" placeholder="请输入要查询的内容" clearable></el-input>
+    <el-input style="width: 260px; margin-left: 10px" v-model="content" placeholder="请输入要查询的内容" clearable></el-input>
 
     <el-button style="margin-left: 10px" type="primary" @click="load"><el-icon style="margin-right: 3px"><Search/></el-icon>查询</el-button>
 
@@ -64,14 +64,14 @@ const state = reactive({
 const currentPage = ref(1)
 const pageSize = ref(100)
 const total = ref(0)
-const username = ref('')
+const content = ref('')
 
 const load = () => {
   request.get("/message/page",{
     params: {
       currentPage: currentPage.value,
       pageSize: pageSize.value,
-      username: username.value,
+      content: content.value,
     }
   }).then(res =>{
     if (res.code === '200'){

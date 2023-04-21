@@ -67,6 +67,11 @@ const routes = [
                 path: 'facility/:id',
                 name: 'ReceptionFacility',
                 component: () => import('../views/reception/Facility.vue'),
+            },
+            {
+                path: 'map',
+                name: 'Map',
+                component: () => import('../views/reception/Map.vue'),
             }
         ]
     },

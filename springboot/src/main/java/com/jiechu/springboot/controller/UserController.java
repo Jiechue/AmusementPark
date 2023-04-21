@@ -13,6 +13,7 @@ import com.jiechu.springboot.entity.User;
 import com.jiechu.springboot.exception.ServiceException;
 import com.jiechu.springboot.service.UserService;
 import com.jiechu.springboot.utils.AdminTokenUtils;
+import com.jiechu.springboot.utils.UserTokenUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DuplicateKeyException;
@@ -48,7 +49,32 @@ public class UserController {
             FileUtil.mkParentDirs(filePath);
             file.transferTo(FileUtil.file(filePath));
             Admin currentAdmin = AdminTokenUtils.getCurrentAdmin();
+            System.out.println(currentAdmin.toString());
             String token = AdminTokenUtils.getToken(currentAdmin.getId().toString(),currentAdmin.getPassword());
+            String url = "http://localhost:9090/api/user/file/download/" + flag + "?&token="+token;
+            if (originalFilename.endsWith("png") || originalFilename.endsWith("jpg") || originalFilename.endsWith("pdf")){
+                url += "&play=1";
+            }
+            return Result.success(url);
+        }catch (Exception e){
+            log.info("文件上传失败",e);
+        }
+        return Result.error("文件上传失败");
+    }
+    @PostMapping("/file/userUpload")
+    public Result UserFile(MultipartFile file) {
+        String originalFilename = file.getOriginalFilename();
+        if (StrUtil.isBlank(originalFilename)){
+            return Result.error("文件上传失败");
+        }
+        long flag = System.currentTimeMillis();
+        String filePath = BASE_FILE_PATH + flag + "_" + originalFilename;
+        try{
+            FileUtil.mkParentDirs(filePath);
+            file.transferTo(FileUtil.file(filePath));
+            User currentAdmin = UserTokenUtils.getCurrentUser();
+            System.out.println(currentAdmin.toString());
+            String token = UserTokenUtils.getToken(currentAdmin.getId().toString(),currentAdmin.getPassword());
             String url = "http://localhost:9090/api/user/file/download/" + flag + "?&token="+token;
             if (originalFilename.endsWith("png") || originalFilename.endsWith("jpg") || originalFilename.endsWith("pdf")){
                 url += "&play=1";
@@ -92,6 +118,12 @@ public class UserController {
             return Result.error("用户名或密码错误");
         }
         return Result.success(res);
+    }
+    @PostMapping("/findUserById")
+    public Result findUser(@RequestBody UserLoginDTO userLoginDTO){
+        User user = userService.showUserById(userLoginDTO.getId());
+        userLoginDTO.setAvatar(user.getAvatar());
+        return Result.success(userLoginDTO);
     }
     @GetMapping("/list")
     public Result finAllUsers(){

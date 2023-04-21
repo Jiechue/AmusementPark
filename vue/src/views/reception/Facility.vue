@@ -28,6 +28,8 @@
             </svg>
             <span>{{ state.facilityDate.liketotal }}</span>
           </div>
+          <div v-if="state.facilityDate.enable" style="font-weight: bold;color: green">可以游玩</div>
+          <div v-if="!state.facilityDate.enable" style="font-weight: bold;color: red">暂未开放</div>
         </div>
       </div>
     </div>
@@ -191,7 +193,7 @@ const dislike = (row) => {
 console.log(useRoute().params.id)
 const handleCurrentChange = (val) => {
   currentPage.value = val
-  load()
+  loadMessage()
 }
 const commit = () => {
   state.messageForm.userid = state.user.id
@@ -200,6 +202,7 @@ const commit = () => {
     if (res.code === '200'){
       console.log(res)
       ElMessage.success("发布成功")
+      state.messageForm.content = ""
       loadMessage()
     }
   })

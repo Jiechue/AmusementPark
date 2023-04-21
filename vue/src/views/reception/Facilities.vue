@@ -29,7 +29,11 @@
                       <div style="font-size: 10px">适合年龄：{{item.age}}</div>
                     </div>
                   </div>
-                  <div>好评数：{{item.liketotal}}</div>
+                  <div style="display:flex;justify-content: space-between">
+                    <div>好评数：{{item.liketotal}}</div>
+                    <div v-if="item.enable" style="font-weight: bold;color: green">可以游玩</div>
+                    <div v-if="!item.enable" style="font-weight: bold;color: red">暂未开放</div>
+                  </div>
                 </div>
                 <div class="list-li-icon"></div>
               </div>

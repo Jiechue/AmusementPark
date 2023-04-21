@@ -43,7 +43,11 @@
                         <div style="font-size: 10px">适合年龄：{{item.age}}</div>
                       </div>
                     </div>
-                    <div>好评数：{{item.liketotal}}</div>
+                    <div style="display:flex;justify-content: space-between">
+                      <div>好评数：{{item.liketotal}}</div>
+                      <div v-if="item.enable" style="font-weight: bold;color: green">可以游玩</div>
+                      <div v-if="!item.enable" style="font-weight: bold;color: red">暂未开放</div>
+                    </div>
                   </div>
                   <div class="list-li-icon"></div>
                 </div>
@@ -108,7 +112,7 @@
                 </div>
               </div>
               <div class="text-btn">
-                <a class="text-btn-a">在线购票</a>
+                <a class="text-btn-a" href="#">在线购票</a>
               </div>
               <img style="width: 100%;top: 30px;position: relative;" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
               <div class="cont-bottom"></div>
@@ -125,13 +129,6 @@
                     <div style="float: left" v-html="state.form.opentime"></div>
                   </div>
                   <br style="background: #cecece;height: 1px;width: 100%">
-                  <div>
-                    <div><h3>今日暂停开放设施</h3></div>
-                    <div>森林神庙、蹦跳车、欢乐老爷车、
-                      激浪旋艇、迷你飞行器、疯狂巴士、
-                      奇妙车队、火箭过山车、滑翔飞翼、
-                      欢乐摩天轮、音乐船、快乐干线</div>
-                  </div>
                 </div>
               </div>
               <img style="width: 100%;top: 50px;position: relative;" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
@@ -144,15 +141,15 @@
               <div class="cont-content">
                 <el-image
                     style="width: 250px; height: 300px"
-                    src="https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg"
+                    src="https://cdn.chimelong.com/upload/f920f6a5f4dfed92/371697ed00ac7811.png"
                     :zoom-rate="1.2"
-                    :preview-src-list="state.test"
+                    :preview-src-list="srcList"
                     :initial-index="2"
                     fit="cover"
                 />
               </div>
               <div class="text-btn">
-                <a class="text-btn-a">在线购票</a>
+                <a class="text-btn-a" href="map">查看地图</a>
               </div>
               <img style="width: 100%;top: 30px;position: relative;" src="https://cdn.chimelong.com/upload/adfbfa03eea725de/c14aebcf3782b6fe.png">
               <div class="cont-bottom"></div>
@@ -177,9 +174,18 @@ const state = reactive({
   form:{},
   date:{},
   url: [
-      "https://img0.baidu.com/it/u=1705694933,4002952892&fm=253&app=138&size=w931&n=0&f=JPEG&fmt=auto?sec=1674061200&t=a5c4072f26119d5c590541d62bec8127"
+
   ]
 })
+const srcList = [
+  'https://fuss10.elemecdn.com/a/3f/3302e58f9a181d2509f3dc0fa68b0jpeg.jpeg',
+  'https://fuss10.elemecdn.com/1/34/19aa98b1fcb2781c4fba33d850549jpeg.jpeg',
+  'https://fuss10.elemecdn.com/0/6f/e35ff375812e6b0020b6b4e8f9583jpeg.jpeg',
+  'https://fuss10.elemecdn.com/9/bb/e27858e973f5d7d3904835f46abbdjpeg.jpeg',
+  'https://fuss10.elemecdn.com/d/e6/c4d93a3805b3ce3f323f7974e6f78jpeg.jpeg',
+  'https://fuss10.elemecdn.com/3/28/bbf893f792f03a54408b3b7a7ebf0jpeg.jpeg',
+  'https://fuss10.elemecdn.com/2/11/6535bcfb26e4c79b48ddde44f4b6fjpeg.jpeg',
+]
 const load = () => {
   request.get("/home/load",{
 

@@ -17,6 +17,7 @@
     >
       <el-menu-item index="/reception/">首页</el-menu-item>
       <el-menu-item index="/reception/facilities">乐园设施</el-menu-item>
+      <el-menu-item index="/reception/map">乐园地图</el-menu-item>
       <el-menu-item index="/reception/ticket">乐园门票</el-menu-item>
       <el-sub-menu index="2">
         <template #title>须知及帮助</template>
@@ -118,11 +119,11 @@
       <el-form-item label="头像" prop="avatar" label-width="formLabelWidth">
         <el-upload
             class="avatar-uploader"
-            :action="'http://localhost:9090/api/user/file/upload?token=' + state.user.token"
+            :action="'http://localhost:9090/api/user/file/userUpload?userToken=' + state.user.token"
             :show-file-list="false"
             :on-success="handleAvatarSuccess"
         >
-          <img v-if="state.form.avatar" :src="state.form.avatar" class="avatar" />
+          <img v-if="state.form.avatar" :src="state.form.avatar" class="avatar" style="width: 178px;height: 178px"/>
           <el-icon v-else class="avatar-uploader-icon"><Plus /></el-icon>
         </el-upload>
       </el-form-item>
@@ -157,7 +158,7 @@
 </template>
 
 <script setup>
-import{ ArrowDown } from '@element-plus/icons-vue'
+import{ ArrowDown,Plus } from '@element-plus/icons-vue'
 import router from "../router/index.js";
 import Cookies from "js-cookie"
 import request from "../request.js";
@@ -286,7 +287,18 @@ const Save = () => {
           if (res.code === '200'){
             ElMessage.success("保存成功")
             dialogFormVisible.value = false;
-            load()
+            request.post("/user/findUserById",state.user).then(res => {
+              if (res.code === '200'){
+                if (res.data){
+                  console.log(res.data)
+                  Cookies.set('user',JSON.stringify(res.data))
+                  console.log(Cookies.get('user') ? JSON.parse(Cookies.get('user')) : {})
+                  location.reload();
+                }
+              }else {
+                ElMessage.error(res.msg)
+              }
+            })
           }else {
             ElMessage.error(res.msg)
           }
@@ -297,7 +309,6 @@ const Save = () => {
           if (res.code === '200'){
             ElMessage.success("注册成功")
             dialogFormRegister.value = false;
-            load()
           }else {
             console.log(res)
             ElMessage.error(res.msg)
